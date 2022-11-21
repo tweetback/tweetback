@@ -67,7 +67,7 @@ module.exports = async function(data) {
 			${data.content}
 		</main>
 		<footer>
-			<p>A open source project from <a href="https://github.com/tweetback">tweetback</a>.</p>
+			<p>An open source project from <a href="https://github.com/tweetback">tweetback</a>.</p>
 		</footer>
 	</body>
 </html>`;
