@@ -4,7 +4,7 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 
 ## Demos
 
-* zachleat.com/twitter/
+* https://www.zachleat.com/twitter/
 * https://twitter.11ty.dev/
 
 ## Features
