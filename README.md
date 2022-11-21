@@ -44,5 +44,5 @@ Note that the first build may take quite a long time (depending on the size of y
 If you want to fetch additional tweets from the API and put them into your sqlite database:
 
 1. You will need a twitter developer token an a `TWITTER_BEARER_TOKEN` environment variable (from the Twitter API v2).
-1. Run `npm run data`
+1. Run `npm run fetch-new-data`
 
