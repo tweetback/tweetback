@@ -11,6 +11,8 @@
 1. Edit the `_data/metadata.js` file to add metadata information.
 1. Run `npm run build` or `npm start`
 
+Note that the first build may take quite a long time (depending on the size of your archive), as remote media is fetched/downloaded into your project locally. Repeat builds will be much faster.
+
 ## Fetch additional tweets from the API
 
 If you want to fetch additional tweets from the API and put them into your sqlite database:
