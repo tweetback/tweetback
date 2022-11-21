@@ -24,9 +24,9 @@ module.exports = async function(data) {
 		}
 
 		navHtml = `<ul class="tweets-nav">
-			<li>${newestHref ? `<a href="${this.url(newestHref)}">` : ""}⇤ Newest<span class="sr-only"> Tweet</span>${newestHref ? `</a>` : ""}</li>
-			<li>${previousHref ? `<a href="${this.url(previousHref)}">` : ""}⇠ Newer<span class="sr-only"> Tweet</span>${previousHref ? `</a>` : ""}</li>
-			<li>${nextHref ? `<a href="${this.url(nextHref)}">` : ""}Older<span class="sr-only"> Tweet</span> ⇢${nextHref ? `</a>` : ""}</li>
+			<li>${newestHref ? `<a href="${newestHref}">` : ""}⇤ Newest<span class="sr-only"> Tweet</span>${newestHref ? `</a>` : ""}</li>
+			<li>${previousHref ? `<a href="${previousHref}">` : ""}⇠ Newer<span class="sr-only"> Tweet</span>${previousHref ? `</a>` : ""}</li>
+			<li>${nextHref ? `<a href="${nextHref}">` : ""}Older<span class="sr-only"> Tweet</span> ⇢${nextHref ? `</a>` : ""}</li>
 		</ul>`;
 	}
 
@@ -44,20 +44,20 @@ module.exports = async function(data) {
 		</script>
 
 		${data.page.fileSlug !== "tweet-pages" ? `
-			<link rel="stylesheet" href="${this.url("/assets/chartist.min.css")}">
-			<link rel="stylesheet" href="${this.url("/assets/chart.css")}">
-			<script src="${this.url("/assets/chartist.min.js")}"></script>
-			<script src="${this.url("/assets/chart.js")}"></script>
+			<link rel="stylesheet" href="/assets/chartist.min.css">
+			<link rel="stylesheet" href="/assets/chart.css">
+			<script src="/assets/chartist.min.js"></script>
+			<script src="/assets/chart.js"></script>
 		` : ""}
 
-		<link rel="stylesheet" href="${this.url("/assets/style.css")}">
-		<script src="${this.url("/assets/script.js")}"></script>
-		${data.page.fileSlug === "newest" ? `<link rel="canonical" href="${this.url(`/${data.tweet.id_str}/`)}">
-<meta http-equiv="refresh" content="0; url=${this.url(`/${data.tweet.id_str}/`)}">` : ""}
+		<link rel="stylesheet" href="/assets/style.css">
+		<script src="/assets/script.js"></script>
+		${data.page.fileSlug === "newest" ? `<link rel="canonical" href="/${data.tweet.id_str}/">
+<meta http-equiv="refresh" content="0; url=/${data.tweet.id_str}/">` : ""}
 	</head>
 	<body>
 		<header>
-			<h1 class="tweets-title"><a href="${this.url("/")}"><img src="${metadata.avatar}" width="52" height="52" alt="${data.metadata.username}’s avatar" class="tweet-avatar">${data.metadata.username}’s Twitter Archive</a>${titleTweetNumberStr}</h1>
+			<h1 class="tweets-title"><a href="/"><img src="${metadata.avatar}" width="52" height="52" alt="${data.metadata.username}’s avatar" class="tweet-avatar">${data.metadata.username}’s Twitter Archive</a>${titleTweetNumberStr}</h1>
 			${!data.hideHeaderTweetsLink ? `<ul class="tweets-nav">
 				<li><a href="${data.metadata.homeUrl}">← ${data.metadata.homeLabel}</a></li>
 			</ul>`: ""}

@@ -1,4 +1,5 @@
 const numeral = require("numeral");
+const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
 
 module.exports = function(eleventyConfig) {
 	eleventyConfig.ignores.add("README.md");
@@ -17,4 +18,6 @@ module.exports = function(eleventyConfig) {
 		}
 		return numeral(num).format("0,0");
 	});
+
+	eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
 };

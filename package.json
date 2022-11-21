@@ -7,7 +7,7 @@
     "import": "node database/import-from-archive.js",
     "fetch-new-data": "node database/fetchFromApi.js",
     "build": "npx @11ty/eleventy --quiet",
-    "start": "npx @11ty/eleventy --quiet --serve --incremental"
+    "start": "npx @11ty/eleventy --quiet --serve"
   },
   "keywords": [],
   "contributors": [

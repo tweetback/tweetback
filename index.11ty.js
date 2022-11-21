@@ -278,7 +278,7 @@ class Index extends Twitter {
 		</form>
 
 		<div>
-			<h2><a href="${this.url("/recent/")}">Recent:</a></h2>
+			<h2><a href="/recent/">Recent:</a></h2>
 			<div class="twtr-sentiment twtr-sentiment-max js">
 				<div class="twtr-sentiment-chart ct-chart"></div>
 				<div class="twtr-sentiment-label">
@@ -292,7 +292,7 @@ class Index extends Twitter {
 		</div>
 
 		<div>
-			<h2><a href="${this.url("/popular/")}">Popular:</a></h2>
+			<h2><a href="/popular/">Popular:</a></h2>
 			<ol class="tweets tweets-linear-list">
 				${mostPopularTweetsHtml.join("")}
 			</ol>
