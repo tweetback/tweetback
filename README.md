@@ -2,7 +2,7 @@
 
 ## Populate the database from your Twitter Archive zip
 
-1. Copy `./data/tweets.js` from your Twitter Archive `zip` file into the `./_database` directory of this project.
+1. Copy `./data/tweets.js` from your Twitter Archive `zip` file into the `./database` directory of this project.
 1. Rename `window.YTD.tweet.part0` in `tweets.js` to `module.exports`
 1. Run `npm run import`
 
