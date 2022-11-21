@@ -216,6 +216,8 @@ class Index extends Twitter {
 	}
 
 	async render(data) {
+		let {transform: twitterLink} = await import("@tweetback/canonical");
+
 		let tweets = await dataSource.getAllTweets();
 		let last12MonthsTweets = tweets.filter(tweet => tweet.date - new Date(Date.now() - 1000*60*60*24*365) > 0);
 
@@ -301,13 +303,13 @@ class Index extends Twitter {
 			<div class="lo-c">
 				<h3>Most Retweeted</h3>
 				<ol>
-					${this.getTopUsersToRetweets(tweets).slice(0, 10).map(user => `<li><a href="https://twitter.com/${user.username}">${user.username}</a> ${user.count} retweet${user.count != 1 ? "s" : ""}</li>`).join("")}
+					${this.getTopUsersToRetweets(tweets).slice(0, 10).map(user => `<li><a href="${twitterLink(`https://twitter.com/${user.username}`)}">${user.username}</a> ${user.count} retweet${user.count != 1 ? "s" : ""}</li>`).join("")}
 				</ol>
 			</div>
 			<div class="lo-c">
 				<h3>Most Retweeted (Last 12 months)</h3>
 				<ol>
-					${this.getTopUsersToRetweets(last12MonthsTweets).slice(0, 10).map(user => `<li><a href="https://twitter.com/${user.username}">${user.username}</a> ${user.count} retweet${user.count != 1 ? "s" : ""}</li>`).join("")}
+					${this.getTopUsersToRetweets(last12MonthsTweets).slice(0, 10).map(user => `<li><a href="${twitterLink(`https://twitter.com/${user.username}`)}">${user.username}</a> ${user.count} retweet${user.count != 1 ? "s" : ""}</li>`).join("")}
 				</ol>
 			</div>
 		</div>
@@ -318,13 +320,13 @@ class Index extends Twitter {
 			<div class="lo-c">
 				<h4>Most Replies To</h4>
 				<ol>
-					${this.getTopReplies(tweets).slice(0, 5).map(user => `<li><a href="https://twitter.com/${user.username}">${user.username}</a> ${user.count} repl${user.count != 1 ? "ies" : "y"}</li>`).join("")}
+					${this.getTopReplies(tweets).slice(0, 5).map(user => `<li><a href="${twitterLink(`https://twitter.com/${user.username}`)}">${user.username}</a> ${user.count} repl${user.count != 1 ? "ies" : "y"}</li>`).join("")}
 				</ol>
 			</div>
 			<div class="lo-c">
 				<h4>Most Replies To (Last 12 months)</h4>
 				<ol>
-					${this.getTopReplies(last12MonthsTweets).slice(0, 5).map(user => `<li><a href="https://twitter.com/${user.username}">${user.username}</a> ${user.count} repl${user.count != 1 ? "ies" : "y"}</li>`).join("")}
+					${this.getTopReplies(last12MonthsTweets).slice(0, 5).map(user => `<li><a href="${twitterLink(`https://twitter.com/${user.username}`)}">${user.username}</a> ${user.count} repl${user.count != 1 ? "ies" : "y"}</li>`).join("")}
 				</ol>
 			</div>
 		</div>

@@ -104,7 +104,7 @@ class Twitter {
 
 		// Links to my tweets
 		if(displayUrl.startsWith(`https://twitter.com/${metadata.username}/status/`)) {
-			targetUrl = `/twitter/${url.expanded_url.substr(`https://twitter.com/${metadata.username}/status/`.length)}`;
+			targetUrl = `/${url.expanded_url.substr(`https://twitter.com/${metadata.username}/status/`.length)}`;
 		}
 
 		// Links to other tweets
@@ -134,6 +134,7 @@ class Twitter {
 	}
 
 	async renderFullText(tweet) {
+		let {transform: twitterLink} = await import("@tweetback/canonical");
 		let text = tweet.full_text;
 
 		// Markdown
@@ -148,17 +149,21 @@ class Twitter {
 				if(url.expanded_url.indexOf(`/${tweet.id}/photo/`) > -1) { // || url.expanded_url.indexOf(`/${tweet.id}/video/`) > -1) {
 					text = text.replace(url.url, "");
 				} else {
-					let displayUrl = this.getUrlObject(url);
-					let displayUrlHtml = `<a href="${displayUrl.targetUrl}" class="${displayUrl.className}">${displayUrl.displayUrl}</a>`
+					let {targetUrl, className, displayUrl} = this.getUrlObject(url);
+					targetUrl = twitterLink(targetUrl);
+					let displayUrlHtml = `<a href="${targetUrl}" class="${className}">${displayUrl}</a>`
 					text = text.replace(url.url, displayUrlHtml);
-					if(displayUrl.targetUrl.startsWith("https://") && !displayUrl.targetUrl.startsWith("https://twitter.com/")) {
-						medias.push(`<a href="${displayUrl.targetUrl}"><img src="https://v1.opengraph.11ty.dev/${encodeURIComponent(displayUrl.targetUrl)}/small/" alt="OpenGraph image for ${displayUrl.displayUrl}" loading="lazy" decoding="async" width="375" height="197" class="tweet-media tweet-media-og"></a>`);
+
+					if(targetUrl.startsWith("https://") && !targetUrl.startsWith("https://twitter.com/")) {
+						medias.push(`<a href="${targetUrl}"><img src="https://v1.opengraph.11ty.dev/${encodeURIComponent(displayUrl.targetUrl)}/small/" alt="OpenGraph image for ${displayUrl.displayUrl}" loading="lazy" decoding="async" width="375" height="197" class="tweet-media tweet-media-og"></a>`);
 					}
 				}
 			}
+
 			for(let mention of tweet.entities.user_mentions) {
 				let usernameMatch = new RegExp(`@${mention.screen_name}`, "i");
-				text = text.replace(usernameMatch, `<a href="${mention.screen_name !== metadata.username ? `https://twitter.com/${mention.screen_name}/` : "/"}" title="${mention.name}" class="tweet-username">${mention.screen_name}</a>`);
+				// Careful, this outputs a zero width space here in between @ and the screen name
+				text = text.replace(usernameMatch, `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username">@​${mention.screen_name}</a>`);
 			}
 		}
 
@@ -228,16 +233,17 @@ class Twitter {
 			return "";
 		}
 
+		let {transform: twitterLink} = await import("@tweetback/canonical");
 		let sentimentValue = this.getSentiment(tweet);
 
 		let shareCount = parseInt(tweet.retweet_count, 10) + (tweet.quote_count ? tweet.quote_count : 0);
 
 		return `<li id="${tweet.id_str}" class="tweet${options.class ? ` ${options.class}` : ""}${this.isReply(tweet) && tweet.in_reply_to_screen_name !== metadata.username ? " is_reply " : ""}${this.isRetweet(tweet) ? " is_retweet" : ""}${this.isMention(tweet) ? " is_mention" : ""}">
-		${this.isReply(tweet) ? `<a href="${tweet.in_reply_to_screen_name !== metadata.username ? `https://twitter.com/${tweet.in_reply_to_screen_name}/status/${tweet.in_reply_to_status_id_str}` : `/twitter/${tweet.in_reply_to_status_id_str}/`}" class="tweet-pretext">…in reply to @${tweet.in_reply_to_screen_name}</a>` : ""}
+		${this.isReply(tweet) ? `<a href="${tweet.in_reply_to_screen_name !== metadata.username ? twitterLink(`https://twitter.com/${tweet.in_reply_to_screen_name}/status/${tweet.in_reply_to_status_id_str}`) : `/${tweet.in_reply_to_status_id_str}/`}" class="tweet-pretext">…in reply to @${tweet.in_reply_to_screen_name}</a>` : ""}
 			<div class="tweet-text">${await this.renderFullText(tweet, options)}</div>
 			<span class="tweet-metadata">
 				${!options.hidePermalink ? `<a href="/${tweet.id_str}/" class="tag tag-naked">Permalink</a>` : ""}
-				<a href="https://twitter.com/${metadata.username}/status/${tweet.id_str}" class="tag tag-naked"><span class="sr-only">On twitter.com </span>↗</a>
+				<a href="${twitterLink(`https://twitter.com/${metadata.username}/status/${tweet.id_str}`)}" class="tag tag-naked"><span class="sr-only">On twitter.com </span>↗</a>
 				${!this.isReply(tweet) ? (this.isRetweet(tweet) ? `<span class="tag tag-retweet">Retweet</span>` : (this.isMention(tweet) ? `<span class="tag">Mention</span>` : "")) : ""}
 				${!this.isRetweet(tweet) ? `<a href="/" class="tag tag-naked tag-lite tag-avatar"><img src="${metadata.avatar}" width="52" height="52" alt="${metadata.username}’s avatar" class="tweet-avatar"></a>` : ""}
 				${options.showPopularity && !this.isRetweet(tweet) ? `
