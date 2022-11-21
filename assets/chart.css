@@ -1,0 +1,161 @@
+.twtr-chart {
+	margin: 2em 0;
+}
+.twtr-sentiment {
+	position: relative;
+}
+.twtr-sentiment-max {
+	max-width: 40rem;
+	margin: 0 auto;
+}
+.twtr-sentiment-label {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 0.75em; /* 12px /16 */
+	font-weight: 600;
+	text-transform: uppercase;
+	text-align: right;
+	color: #637e9a;
+	margin: 0 0 .75em;
+}
+.twtr-sentiment-label span {
+	display: inline-block;
+	margin-left: .5em;
+	position: relative;
+	bottom: -.75em;
+}
+
+/* Chartist overrides */
+.twtr-sentiment-chart {
+	min-height: 2em;
+}
+.twtr-sentiment-chart svg {
+	margin: 1px;
+}
+.twtr-sentiment-chart .ct-point,
+.twtr-sentiment-chart .ct-line {
+	stroke: #3b8a3e;
+}
+.twtr-sentiment-chart .ct-point {
+	stroke-width: 6px;
+}
+.twtr-sentiment-chart .ct-line {
+	stroke-width: 3px;
+}
+/* Zero */
+.twtr-chart-sentiment-lastxdays .ct-series-c .ct-point,
+.twtr-sentiment-chart .ct-series-a .ct-point,
+.twtr-sentiment-chart .ct-series-b .ct-point {
+	stroke-width: 0;
+}
+.twtr-sentiment-chart .ct-series-a .ct-line {
+	stroke-width: 1px;
+	stroke: rgba( 0, 0, 0, .3 );
+	stroke-dasharray: 1;
+}
+/* Mean */
+.twtr-sentiment-chart .ct-series-b .ct-line {
+	stroke-width: 1px;
+	stroke: rgba( 255, 0, 0, .15 );
+	stroke-dasharray: 2;
+}
+.twtr-chart .ct-bar {
+	stroke-width: 2px;
+}
+.twtr-chart .ct-series-a .ct-bar {
+	stroke: #cc3638;
+}
+.twtr-chart-tweets .ct-series-a .ct-bar,
+.twtr-chart-tweets-vs .ct-series-a .ct-bar {
+	stroke: #1da1f2;
+}
+.twtr-chart-retweets .ct-series-a .ct-bar,
+.twtr-chart-retweets-vs .ct-series-a .ct-bar {
+	stroke: #17bf63;
+}
+.twtr-chart-likes .ct-series-a .ct-bar,
+.twtr-chart-likes-vs .ct-series-a .ct-bar {
+	stroke: #e0245e;
+}
+.twtr-chart-tweets-vs .ct-series-b .ct-bar,
+.twtr-chart-retweets-vs .ct-series-b .ct-bar,
+.twtr-chart-likes-vs .ct-series-b .ct-bar {
+	stroke: #dedede;
+}
+
+/* Chart Legend, Subset Links */
+.twtr-list {
+	text-align: left;
+	padding-left: 1.5em;
+}
+@media ( min-width: 43.75em ) {
+	.twtr-list {
+		padding: 0;
+	}
+}
+.twtr-posts,
+.twtr-chart-subset,
+.twtr-chart-legend {
+	list-style: none;
+	padding: 0;
+}
+.twtr-posts li {
+	text-align: left;
+	margin-bottom: .3em;
+}
+.twtr-posts li a {
+	text-decoration: none;
+	font-size: 1.25em;
+	line-height: 1.6;
+}
+.twtr-posts li a:hover,
+.twtr-posts li a:focus {
+	background-color: rgba( 255, 0, 0, .1);
+}
+.twtr-chart-subset,
+.twtr-chart-legend {
+	text-align: center;
+	text-transform: uppercase;
+	margin: 0;
+}
+.twtr-chart-subset {
+	margin: 0 0 2em;
+}
+.twtr-chart-legend {
+	margin: -1em 0 0 0;
+}
+.twtr-chart-subset li,
+.twtr-chart-legend li {
+	display: inline;
+	font-size: .6875em;
+	margin: 0 .5em;
+}
+.twtr-chart-subset li {
+	margin: 0 .3em;
+}
+.twtr-chart-legend li:before {
+	content: " ";
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	margin-right: .5em;
+	margin-bottom: -1px;
+	background-color: #dedede;
+}
+/* Android */
+.twtr-chart-tweets-vs-legend .twtr-series-b:before {
+	background-color: #1da1f2;
+}
+.twtr-chart-retweets-vs-legend .twtr-series-b:before {
+	background-color: #17bf63;
+}
+.twtr-chart-likes-vs-legend .twtr-series-b:before {
+	background-color: #e0245e;
+}
+/* Not Android */
+.twtr-chart-tweets-vs-legend .twtr-series-c:before,
+.twtr-chart-retweets-vs-legend .twtr-series-c:before,
+.twtr-chart-likes-vs-legend .twtr-series-c:before {
+	background-color: #dedede;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "tweetback",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "clean": "rm -rf .cache",
+    "import": "node database/import-from-archive.js",
+    "fetch-new-data": "node database/fetchFromApi.js",
+    "build": "npx @11ty/eleventy --quiet",
+    "start": "npx @11ty/eleventy --quiet --serve --incremental"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "2.0.0-canary.18",
+    "@11ty/eleventy-fetch": "^3.0.0",
+    "@11ty/eleventy-img": "^2.0.1",
+    "country-emoji": "^1.5.6",
+    "dotenv": "^9.0.2",
+    "emoji-regex": "^8.0.0",
+    "lodash": "^4.17.21",
+    "numeral": "^2.0.6",
+    "parse-domain": "^2.3.2",
+    "sentiment": "^5.0.2",
+    "sqlite3": "^5.1.2",
+    "swearjar": "^0.2.0",
+    "twitter-lite": "^1.1.0"
+  },
+  "dependencies": {
+    "chartist": "^0.11.4"
+  }
+}

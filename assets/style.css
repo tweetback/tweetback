@@ -1,0 +1,359 @@
+* {
+	box-sizing: border-box;
+}
+html {
+	height: 100%;
+}
+body {
+	min-height: 100%;
+	font-family: system-ui, sans-serif;
+	margin: 0;
+	padding: .5em .5em ;
+}
+footer {
+	font-size: 0.875em; /* 14px /16 */
+	margin-top: 1em;
+	border-top: 1px solid #eee;
+	padding: 1em 0 0;
+	font-style: italic;
+}
+:link,
+:visited {
+	color: #1C4A1D;
+	text-decoration-color: #17bf63;
+}
+.sr-only {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important; /* Fix for https://github.com/twbs/bootstrap/issues/25686 */
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+.js {
+	display: none;
+}
+.has-js .js {
+	display: initial;
+	display: block;
+}
+input,
+button {
+	font-size: inherit;
+}
+button {
+	border-radius: 0.2em; /* 4px /20 */
+}
+
+/* Flex lib */
+.lo {
+  /* The custom properties should not inherit from parent layouts */
+  --lo-stackpoint: initial;
+  --lo-margin-h: 0;
+  --lo-margin-v: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  margin-top: calc(-1 * var(--lo-margin-v, 0));
+  margin-left: calc(-1 * var(--lo-margin-h, 0));
+}
+.lo-c {
+  /* if a margin is in play, account for this in our stackpoint calculations */
+  /* notably this will also work if a stackpoint is not used. */
+  --lo-margin-mod: calc( var(--lo-stackpoint, -1 * var(--lo-margin-h, 0px)) - var(--lo-stackpoint, 0px) + var(--lo-margin-h, 0px) );
+  --lo-stackpoint-calc: calc( ( var(--lo-stackpoint, 100%) - 100% + var(--lo-margin-mod, 0px) ) * 999);
+
+  flex-grow: 1;
+  flex-basis: var(--lo-basis, var(--lo-stackpoint-calc, auto));
+  margin: 0;
+  margin-top: var(--lo-margin-v, 0);
+  margin-left: var(--lo-margin-h, 0);
+}
+.lo-inline > .lo-c {
+  flex-grow: 0;
+}
+
+.lo-cols {
+	column-gap: 10vw;
+	column-width: var(--lo-basis, 20em);
+}
+.lo-cols .tweet {
+	break-inside: avoid;
+}
+
+/* Page level stuff */
+.tweets-title {
+	display: inline-block;
+	font-size: 1em;
+	line-height: 1.6875; /* 27px /16 */
+	font-weight: 600;
+	margin: 0;
+	margin-right: 1.5em;
+}
+.tweets-nav {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	line-height: 1.6875; /* 27px /16 */
+}
+.tweets-nav li {
+	display: inline-block;
+}
+@media (min-width: 48em) { /* 768px */
+	.tweets-nav {
+		float: right;
+	}
+}
+.tweets-primary-count {
+	font-size: 4em;
+	margin: 2em 0 1em;
+	padding: 0 0 2em;
+	text-align: center;
+	border-bottom: 2px solid #eee;
+	font-weight: 400;
+}
+.tweets-primary-count-num {
+	font-weight: 900;
+}
+
+/* Tweet list */
+.tweets {
+	max-width: 40em;
+	margin: 4em auto;
+	padding: 0;
+}
+.tweets .tweets-replies {
+	padding-left: 1em;
+	border-left: 2px solid rgba(0,0,0,0.1);
+	margin-left: -.75em;
+}
+.tweets .tweets-replies:empty {
+	display: none;
+}
+/* Used on tweet-pages only */
+.tweets-thread {
+	margin-top: 15vh;
+	margin-bottom: 15vh;
+}
+.tweets-linear-list .tweet {
+	margin-bottom: 3.5rem;
+	padding-bottom: 3.5rem;
+	border-bottom: 1px solid #ccc;
+}
+
+/* Individual tweet */
+.is_retweet .tweet-text {
+	opacity: .6;
+	font-style: italic;
+}
+.tweet-text {
+	white-space: pre-wrap;
+	line-height: 1.4;
+	word-break: break-word;
+}
+.tweet-url {
+	word-break: break-word;
+	hyphens: none;
+}
+.tweet-username {
+	font-weight: 500;
+}
+.tweet-username,
+.tweet-username:visited {
+	color: inherit;
+	font-size: 0.9545454545455em; /* 21px /22 */
+}
+.tweet-username:before {
+	content: "@";
+}
+.tweet-pretext {
+	display: block;
+	font-style: italic;
+	font-size: 1rem; /* 16px /16 */
+	padding: 0 0 .4em;
+}
+.tweet-pretext,
+.tweet-pretext:visited {
+	color: #555;
+}
+.tweet-metadata {
+	display: block;
+	margin-top: .5em;
+}
+.tweet-metadata,
+.tweet-metadata :link,
+.tweet-metadata :visited {
+	color: #757575;
+}
+
+/* Individual tweet */
+.tweet {
+	font-size: 1.625em; /* 26px /16 */
+	margin: 0 0 3.5rem;
+	padding: 0;
+	list-style: none;
+}
+.tweet.is_reply,
+.tweet.is_retweet {
+	font-size: 1.375em; /* 22px /16 */
+}
+.tweet-next .tweet-text,
+.tweet-previous .tweet-text {
+	color: #777;
+}
+.tweet-next .tag-favorite,
+.tweet-next .tag-retweet,
+.tweet-previous .tag-favorite,
+.tweet-previous .tag-retweet {
+	opacity: .5;
+}
+
+/* Avatar */
+.tweet-avatar {
+	width: 27px;
+	height: 27px;
+	margin-bottom: -3px;
+	border-radius: 50%;
+}
+h1 .tweet-avatar {
+	vertical-align: text-bottom;
+	margin-right: 5px;
+}
+
+/* Tweet Media */
+.tweet-medias {
+	display: flex;
+	margin: 1em 0 0;
+	max-height: 10em;
+	gap: .5em;
+}
+.tweet-medias > a {
+	display: block;
+	flex-basis: 12em;
+	flex-grow: 0.5;
+}
+.tweet-media {
+	border-radius: .25em;
+	box-shadow: 0 0px 18px 3px rgb(0 0 0 / 40%);
+}
+img.tweet-media {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 1px solid #ccc;
+}
+video.tweet-media {
+	width: auto;
+	max-height: 10em;
+}
+.tweet-media-load-error {
+	display: block;
+	border-top: 1px dashed;
+	margin: .5em 0;
+	padding-top: .5em;
+	color: #777;
+}
+a[href]:focus .tweet-media-load-error,
+a[href]:hover .tweet-media-load-error {
+	color: #333;
+}
+@supports (object-fit: cover) {
+	.tweet-media {
+		height: 100%;
+		object-fit: cover;
+		object-position: top;
+	}
+}
+.tweet-previous .tweet-medias,
+.tweet-next .tweet-medias {
+	max-height: 6em;
+}
+.tweet-previous .tweet-media,
+.tweet-next .tweet-media {
+	opacity: .7;
+	max-height: 6em;
+	max-width: 12em;
+}
+.tweet-media:hover {
+	border-color: #999;
+}
+.tweet-previous .tweet-media:hover,
+.tweet-next .tweet-media:hover {
+	opacity: 1;
+}
+/* OpenGraph images */
+img.tweet-media-og {
+	object-position: center;
+}
+
+/* Tags */
+.tag {
+	display: inline-block;
+	font-size: 0.8125rem; /* 13px /16 */
+	margin: 0 0 0 4px;
+	padding: 6px;
+	white-space: nowrap;
+	text-decoration: none;
+	background-color: #999;
+	color: #fff;
+	border: 1px solid #999;
+	border-radius: 0.4em;
+	font-weight: 600;
+	vertical-align: text-bottom;
+	line-height: 1;
+}
+.tweet-metadata .tag:link,
+.tweet-metadata .tag:visited {
+	color: #fff;
+}
+.tag-lite {
+	border-color: transparent;
+	padding-left: 2px;
+	padding-right: 2px;
+	font-weight: 400;
+}
+.tag-naked {
+	background-color: #fff;
+	color: #757575;
+}
+.tweet-metadata .tag-naked:link,
+.tweet-metadata .tag-naked:visited {
+	color: #757575;
+}
+.tag:first-child,
+.tag + .tag {
+	margin-left: 0;
+}
+.tag-favorite {
+	background-color: #e0245e;
+	border-color: #e0245e;
+}
+.tag-retweet {
+	background-color: #397d58;
+	border-color: #397d58;
+}
+.tag-lite.tag-favorite,
+.tag-lite.tag-retweet {
+	background-color: #fff;
+	border-color: transparent;
+	font-weight: inherit;
+}
+.tag-lite.tag-favorite {
+	color: #e0245e;
+}
+.tag-lite.tag-retweet {
+	color: #096f37;
+}
+.tag-avatar {
+	padding: 0;
+}
+
+/* Search form */
+.tweets-search {
+	margin: 0 auto;
+	max-width: 40rem; /* 640px /16 */
+	font-size: 1.25em; /* 20px /16 */
+}
