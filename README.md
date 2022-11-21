@@ -15,7 +15,7 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 * `t.co` links are bypassed and original hyperlinks URLs are used.
 * Links to users, tweets, non-truncated URLs.
 * Nicer link formatting for links-to-tweets: @username/:id.
-* Support some markdown: I sometimes use `backtick` markdown notation for code in my tweet text. This translates to <code> properly.
+* Support some markdown: I sometimes use `backtick` markdown notation for code in my tweet text. This translates to `<code>` properly.
 * Analytics:
 	* See your most popular tweets
 	* Who you retweet the most
