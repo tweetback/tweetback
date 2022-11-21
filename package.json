@@ -1,7 +1,7 @@
 {
   "name": "tweetback",
   "version": "1.0.0",
-  "description": "",
+  "description": "Take ownership of your Twitter data and host your own Twitter archive.",
   "scripts": {
     "clean": "rm -rf .cache",
     "import": "node database/import-from-archive.js",
@@ -18,6 +18,7 @@
     "@11ty/eleventy": "2.0.0-canary.18",
     "@11ty/eleventy-fetch": "^3.0.0",
     "@11ty/eleventy-img": "^2.0.1",
+    "@tweetback/canonical": "^2.0.0",
     "country-emoji": "^1.5.6",
     "dotenv": "^9.0.2",
     "emoji-regex": "^8.0.0",
@@ -30,7 +31,6 @@
     "twitter-lite": "^1.1.0"
   },
   "dependencies": {
-    "@tweetback/canonical": "^2.0.0",
     "chartist": "^0.11.4"
   }
 }
