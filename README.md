@@ -17,3 +17,7 @@ If you want to fetch additional tweets from the API and put them into your sqlit
 
 1. You will need a twitter developer token an a `TWITTER_BEARER_TOKEN` environment variable (from the Twitter API v2).
 1. Run `npm run data`
+
+## Contributors
+
+* [Zach Leatherman](https://zachleat.com/)
