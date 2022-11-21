@@ -162,8 +162,7 @@ class Twitter {
 
 			for(let mention of tweet.entities.user_mentions) {
 				let usernameMatch = new RegExp(`@${mention.screen_name}`, "i");
-				// Careful, this outputs a zero width space here in between @ and the screen name
-				text = text.replace(usernameMatch, `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username">@​${mention.screen_name}</a>`);
+				text = text.replace(usernameMatch, `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username">${mention.screen_name}</a>`);
 			}
 		}
 
