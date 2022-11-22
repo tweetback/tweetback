@@ -47,3 +47,8 @@ If you want to fetch additional tweets from the API and put them into your sqlit
 1. You will need a twitter developer token an a `TWITTER_BEARER_TOKEN` environment variable (from the Twitter API v2).
 1. Run `npm run fetch-new-data`
 
+#### Exclude Tweets to Twitter Circles
+
+1. Before running `npm run import`, copy `./data/twitter-circle-tweet.js` from your Twitter Archive `zip` file into the `./database` directory of this project _(in addition to `tweets.js`)_.
+1. Rename `window.YTD.tweet.part0` in `twitter-circle-tweet.js` to `module.exports`
+1. Run `npm run import-without-circles`
