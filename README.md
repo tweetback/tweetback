@@ -26,6 +26,9 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 
 ## Usage
 
+* Install [Node.js](https://nodejs.org/)
+* Run `npm install`
+
 ### Populate the database from your Twitter Archive zip
 
 1. Copy `./data/tweets.js` from your Twitter Archive `zip` file into the `./database` directory of this project.
