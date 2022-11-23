@@ -54,3 +54,8 @@ If you want to fetch additional tweets from the API and put them into your sqlit
 ### Add your production URL to `@tweetback/canonical` (optional)
 
 https://github.com/tweetback/tweetback-canonical has a `mapping.js` file that stores the existing twitter username => canonical URL mappings. These will be transformed automatically to point to other archives in all `tweetback` instances.
+
+### Publish your archive (optional)
+
+- To [GitHub Pages](docs/deploy-with-github-pages.md)
+
