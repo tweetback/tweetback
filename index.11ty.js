@@ -380,7 +380,17 @@ class Index extends Twitter {
 				if(urlInput && urlInput.value) {
 					var tweetIdMatch = urlInput.value.match(/\\/(\\d+)/);
 					if(tweetIdMatch && tweetIdMatch.length) {
-						document.location.href = "/" + tweetIdMatch[1] + "/";
+						/* make sure that our redirect honours any pathPrefix etc
+						   by allowing 11ty to rewrite a twitter link at build time
+						   and then reading and altering that rewritten link at runtime */
+						var redirect = "/1234567890123456789/";
+						var t = document.querySelector("template#rendered-twitter-link");
+						if (t && t.content) {
+							var a = t.content.querySelector("a");
+							if (a) redirect = a.href;
+						}
+						redirect = redirect.replace("1234567890123456789", tweetIdMatch[1]);
+						document.location.href = redirect;
 					}
 				}
 			}, false);
@@ -389,6 +399,7 @@ class Index extends Twitter {
 		var series = getSentimentsFromList( '#tweets-recent-home' );
 		makeSentimentChart( '.twtr-sentiment-chart', series );
 		</script>
+		<template id="rendered-twitter-link"><a href="/1234567890123456789/">twitter link</a></template>
 `;
 		// <h3>Before 2012, it was not possible to tell the difference between a mention and reply. This happened ${this.renderNumber(ambiguousReplyMentionCount)} times (${this.renderPercentage(ambiguousReplyMentionCount, tweetCount)})</h3>
 
