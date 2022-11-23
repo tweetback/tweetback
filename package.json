@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "rm -rf .cache",
     "import": "node database/import-from-archive.js",
+    "import-without-circles": "npm run import -- removeCircleTweets",
     "fetch-new-data": "node database/fetchFromApi.js",
     "build": "npx @11ty/eleventy --quiet",
     "start": "npx @11ty/eleventy --quiet --serve"
