@@ -26,6 +26,9 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 
 ## Usage
 
+* Install [Node.js](https://nodejs.org/)
+* Run `npm install`
+
 ### Populate the database from your Twitter Archive zip
 
 1. Copy `./data/tweets.js` from your Twitter Archive `zip` file into the `./database` directory of this project.
@@ -40,10 +43,13 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 
 Note that the first build may take quite a long time (depending on the size of your archive), as remote media is fetched/downloaded into your project locally. Repeat builds will be much faster.
 
-### Fetch additional tweets from the API
+### Fetch additional tweets from the API (optional)
 
 If you want to fetch additional tweets from the API and put them into your sqlite database:
 
 1. You will need a twitter developer token an a `TWITTER_BEARER_TOKEN` environment variable (from the Twitter API v2).
 1. Run `npm run fetch-new-data`
 
+### Add your production URL to `@tweetback/canonical` (optional)
+
+https://github.com/tweetback/tweetback-canonical has a `mapping.js` file that stores the existing twitter username => canonical URL mappings. These will be transformed automatically to point to other archives in all `tweetback` instances.
