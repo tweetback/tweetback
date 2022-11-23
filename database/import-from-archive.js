@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { checkInDatabase, logTweetCount, saveToDatabaseApiV1, createTable } = require("./tweet-to-db");
-const shouldFilterOutCircleTweets = process.argv.includes('removeCircleTweets');
+const shouldFilterOutCircleTweets = process.argv.includes('removecircletweets');
 const tweets = require("./tweets.js");
 let circleTweets;
 
