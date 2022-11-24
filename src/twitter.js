@@ -295,7 +295,7 @@ class Twitter {
 		let previousAndNextTweetOptions = Object.assign({}, tweetOptions, { hidePermalink: false });
 		let previousHtml = await this.getReplyHtml(tweet, "previous", previousAndNextTweetOptions);
 		let nextHtml = await this.getReplyHtml(tweet, "next", previousAndNextTweetOptions);
-		return `<ol class="tweets tweets-thread">
+		return `<ol class="tweets tweets-thread" data-pagefind-body>
 			${previousHtml ? `<ol class="tweets-replies">${previousHtml}</ol>` : ""}
 			${await this.renderTweet(tweet, tweetOptions)}
 			${nextHtml ? `<ol class="tweets-replies">${nextHtml}</ol>` : ""}

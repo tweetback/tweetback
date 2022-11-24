@@ -25,6 +25,7 @@
     "emoji-regex": "^8.0.0",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
+    "pagefind": "^0.10.2",
     "parse-domain": "^2.3.2",
     "sentiment": "^5.0.2",
     "sqlite3": "^5.1.2",

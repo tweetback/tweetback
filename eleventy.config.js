@@ -1,5 +1,6 @@
 const numeral = require("numeral");
 const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
+const { execSync } = require('child_process')
 
 module.exports = function(eleventyConfig) {
 	eleventyConfig.ignores.add("README.md");
@@ -24,4 +25,10 @@ module.exports = function(eleventyConfig) {
 	});
 
 	eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
+
+	// pagefind search
+	eleventyConfig.on('eleventy.after', () => {
+		console.log('indexing search using pagefind');
+		execSync(`npx pagefind --source _site`, { encoding: 'utf-8' });
+  });
 };
