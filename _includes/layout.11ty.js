@@ -57,7 +57,7 @@ module.exports = async function(data) {
 	</head>
 	<body>
 		<header>
-			<h1 class="tweets-title"><a href="/"><img src="${metadata.avatar}" width="52" height="52" alt="${data.metadata.username}’s avatar" class="tweet-avatar">${data.metadata.username}’s Twitter Archive</a>${titleTweetNumberStr}</h1>
+			<h1 class="tweets-title"><a href="/"><img src="/assets/avatar.jpg" width="52" height="52" alt="${data.metadata.username}’s avatar" class="tweet-avatar">${data.metadata.username}’s Twitter Archive</a>${titleTweetNumberStr}</h1>
 			${!data.hideHeaderTweetsLink ? `<ul class="tweets-nav">
 				<li><a href="${data.metadata.homeUrl}">← ${data.metadata.homeLabel}</a></li>
 			</ul>`: ""}
