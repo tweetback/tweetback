@@ -1,5 +1,5 @@
 const Sentiment = require("sentiment");
-const parseDomain = require("parse-domain");
+const { parseDomain } = require("parse-domain");
 const dataSource = require("./DataSource");
 const metadata = require("../_data/metadata.js");
 const eleventyImg = require("@11ty/eleventy-img");
@@ -59,7 +59,7 @@ class Twitter {
 		if(tweet.entities && tweet.entities.urls) {
 			for(let url of tweet.entities.urls) {
 				try {
-					let urlObj = new URL(url.expanded_url);
+					let urlObj = new URL(url.expanded_url ?? url.url);
 					let parsedDomain = parseDomain(urlObj.host);
 					links.push({
 						host: urlObj.host,
@@ -98,13 +98,14 @@ class Twitter {
 	// }
 
 	getUrlObject(url) {
-		let displayUrl = url.expanded_url;
+		let expandedUrl = url.expanded_url ?? url.url;
+		let displayUrl = expandedUrl;
 		let className = "tweet-url";
-		let targetUrl = url.expanded_url;
+		let targetUrl = expandedUrl;
 
 		// Links to my tweets
 		if(displayUrl.startsWith(`https://twitter.com/${metadata.username}/status/`)) {
-			targetUrl = `/${url.expanded_url.substr(`https://twitter.com/${metadata.username}/status/`.length)}`;
+			targetUrl = `/${expandedUrl.substr(`https://twitter.com/${metadata.username}/status/`.length)}`;
 		}
 
 		// Links to other tweets
@@ -146,7 +147,7 @@ class Twitter {
 		// linkify urls
 		if( tweet.entities ) {
 			for(let url of tweet.entities.urls) {
-				if(url.expanded_url.indexOf(`/${tweet.id}/photo/`) > -1) { // || url.expanded_url.indexOf(`/${tweet.id}/video/`) > -1) {
+				if(url.expanded_url.indexOf(`/${tweet.id}/photo/`) > -1) {
 					text = text.replace(url.url, "");
 				} else {
 					let {targetUrl, className, displayUrl} = this.getUrlObject(url);
