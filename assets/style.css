@@ -315,6 +315,14 @@ img.tweet-media-og {
 	padding-right: 2px;
 	font-weight: 400;
 }
+.tag-icon {
+	display: inline-flex;
+	border: none;
+	padding: 0;
+	margin-bottom: 0;
+	border-radius: .6em;
+	overflow: hidden;
+}
 .tag-naked {
 	background-color: #fff;
 	color: #757575;

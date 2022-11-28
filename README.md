@@ -32,9 +32,10 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 ### Populate the database from your Twitter Archive zip
 
 1. Copy `./data/tweets.js` from your Twitter Archive `zip` file into the `./database` directory of this project.
-1. Rename `window.YTD.tweet.part0` in `tweets.js` to `module.exports`
-1. Run `npm install`
-1. Run `npm run import`
+   * Rename `window.YTD.tweet.part0` in `tweets.js` to `module.exports`
+1. If you want to exclude Twitter Circles tweets (these are included in the archive, why 😭): copy `./data/twitter-circle-tweet.js` from your Twitter Archive `zip` file into the `./database` directory of this project.
+   * Rename `window.YTD.tweet.part0` in `twitter-circle-tweet.js` to `module.exports`
+1. Run `npm run import` or `npm run import-without-circles`
 
 ### Build the web site
 
@@ -47,7 +48,7 @@ Note that the first build may take quite a long time (depending on the size of y
 
 If you want to fetch additional tweets from the API and put them into your sqlite database:
 
-1. You will need a twitter developer token an a `TWITTER_BEARER_TOKEN` environment variable (from the Twitter API v2).
+1. You will need a twitter developer token an a `TWITTER_BEARER_TOKEN` environment variable (from the Twitter API v2). Read more about [App-only Bearer Tokens](https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens).
 1. Run `npm run fetch-new-data`
 
 ### Add your production URL to `@tweetback/canonical` (optional)

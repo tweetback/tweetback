@@ -12,6 +12,10 @@ module.exports = function(eleventyConfig) {
 		"node_modules/chartist/dist/chartist.min.js": "assets/chartist.min.js",
 	});
 
+	eleventyConfig.addJavaScriptFunction("avatarUrl", function avatarUrl(url) {
+		return `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(url)}/`;
+	});
+
 	eleventyConfig.addJavaScriptFunction("renderNumber", function renderNumber(num) {
 		if(typeof num === "string") {
 			num = parseInt(num, 10);
