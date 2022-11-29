@@ -67,9 +67,11 @@ async function retrieveTweets( maxId, existingRecordsFound = 0 ) {
 	}
 
 	console.log( params );
-	console.log( "TWITTER REQUEST to statuses/user_timeline (1500/15m)", ++requestCount );
+
 	let twitterUserId = await TwitterApiFetchUserId(metadata.username);
-	// console.log( "Found userid", twitterUserId );
+	console.log( "Found userid", twitterUserId );
+
+	console.log( "TWITTER REQUEST to statuses/user_timeline (1500/15m)", ++requestCount );
 	let results = await client.get( `users/${twitterUserId}/tweets`, params);
 	if(results.errors) {
 		console.log( "ERRORS", results.errors );
