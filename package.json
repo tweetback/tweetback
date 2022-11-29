@@ -32,6 +32,7 @@
     "twitter-lite": "^1.1.0"
   },
   "dependencies": {
+    "@11ty/is-land": "^3.0.0",
     "chartist": "^0.11.4"
   }
 }
