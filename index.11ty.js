@@ -3,6 +3,7 @@ const metadata = require("./_data/metadata.js");
 const Twitter = require("./src/twitter");
 const EmojiAggregator = require( "./src/EmojiAggregator" );
 const dataSource = require("./src/DataSource");
+const basePath = metadata.basePath || "";
 
 class Index extends Twitter {
 	data() {
@@ -278,7 +279,7 @@ class Index extends Twitter {
 		</form>
 
 		<div>
-			<h2><a href="/recent/">Recent:</a></h2>
+			<h2><a href="${basePath}/recent/">Recent:</a></h2>
 			<div class="twtr-sentiment twtr-sentiment-max js">
 				<div class="twtr-sentiment-chart ct-chart"></div>
 				<div class="twtr-sentiment-label">
@@ -292,7 +293,7 @@ class Index extends Twitter {
 		</div>
 
 		<div>
-			<h2><a href="/popular/">Popular:</a></h2>
+			<h2><a href="${basePath}/popular/">Popular:</a></h2>
 			<ol class="tweets tweets-linear-list">
 				${mostPopularTweetsHtml.join("")}
 			</ol>

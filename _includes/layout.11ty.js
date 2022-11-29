@@ -1,5 +1,7 @@
 const dataSource = require("../src/DataSource");
 const metadata = require("../_data/metadata.js");
+const basePath = metadata.basePath || "";
+const assetsPath = `${basePath}/assets`;
 
 module.exports = async function(data) {
 	let titleTweetNumberStr = "";
@@ -44,14 +46,14 @@ module.exports = async function(data) {
 		</script>
 
 		${data.page.fileSlug !== "tweet-pages" ? `
-			<link rel="stylesheet" href="/assets/chartist.min.css">
-			<link rel="stylesheet" href="/assets/chart.css">
-			<script src="/assets/chartist.min.js"></script>
-			<script src="/assets/chart.js"></script>
+			<link rel="stylesheet" href="${assetsPath}/chartist.min.css">
+			<link rel="stylesheet" href="${assetsPath}/chart.css">
+			<script src="${assetsPath}/chartist.min.js"></script>
+			<script src="${assetsPath}/chart.js"></script>
 		` : ""}
 
-		<link rel="stylesheet" href="/assets/style.css">
-		<script src="/assets/script.js"></script>
+		<link rel="stylesheet" href="${assetsPath}/style.css">
+		<script src="${assetsPath}/script.js"></script>
 		${data.page.fileSlug === "newest" ? `<link rel="canonical" href="/${data.tweet.id_str}/">
 <meta http-equiv="refresh" content="0; url=/${data.tweet.id_str}/">` : ""}
 	</head>
