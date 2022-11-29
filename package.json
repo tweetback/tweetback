@@ -19,7 +19,7 @@
     "@11ty/eleventy": "2.0.0-canary.18",
     "@11ty/eleventy-fetch": "^3.0.0",
     "@11ty/eleventy-img": "^2.0.1",
-    "@tweetback/canonical": "^2.0.1",
+    "@tweetback/canonical": "^2.0.3",
     "country-emoji": "^1.5.6",
     "dotenv": "^16.0.3",
     "emoji-regex": "^10.2.1",
@@ -32,6 +32,7 @@
     "twitter-lite": "^1.1.0"
   },
   "dependencies": {
+    "@11ty/is-land": "^3.0.0",
     "chartist": "^0.11.4"
   }
 }
