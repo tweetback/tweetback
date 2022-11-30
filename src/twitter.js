@@ -147,7 +147,7 @@ class Twitter {
 		// linkify urls
 		if( tweet.entities ) {
 			for(let url of tweet.entities.urls) {
-				if(url.expanded_url.indexOf(`/${tweet.id}/photo/`) > -1) {
+				if(url.expanded_url && url.expanded_url.indexOf(`/${tweet.id}/photo/`) > -1) {
 					text = text.replace(url.url, "");
 				} else {
 					let {targetUrl, className, displayUrl} = this.getUrlObject(url);
