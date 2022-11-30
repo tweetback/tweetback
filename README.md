@@ -26,6 +26,8 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 
 ## Usage
 
+* Clone/download this repository
+* In your terminal, `cd` to the folder of the project
 * Install [Node.js](https://nodejs.org/)
 * Run `npm install`
 
