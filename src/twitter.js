@@ -61,10 +61,17 @@ class Twitter {
 				try {
 					let urlObj = new URL(url.expanded_url ?? url.url);
 					let parsedDomain = parseDomain(urlObj.host);
+					let domain;
+					if (parsedDomain.topLevelDomains) {
+						const tld = parsedDomain.topLevelDomains.join(".");
+						domain = `${parsedDomain.domain}.${tld}`
+					} else {
+						domain = urlObj.host;
+					}
 					links.push({
 						host: urlObj.host,
 						origin: urlObj.origin,
-						domain: `${parsedDomain.domain}.${parsedDomain.tld}`
+						domain: domain
 					});
 				} catch(e) {
 					console.log( e );
