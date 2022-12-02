@@ -303,10 +303,10 @@ class Twitter {
 		let previousAndNextTweetOptions = Object.assign({}, tweetOptions, { hidePermalink: false });
 		let previousHtml = await this.getReplyHtml(tweet, "previous", previousAndNextTweetOptions);
 		let nextHtml = await this.getReplyHtml(tweet, "next", previousAndNextTweetOptions);
-		return `<ol class="tweets tweets-thread">
-			${previousHtml ? `<ol class="tweets-replies">${previousHtml}</ol>` : ""}
+		return `<ol class="tweets tweets-thread hfeed">
+			${previousHtml ? `<ol class="tweets-replies hfeed">${previousHtml}</ol>` : ""}
 			${await this.renderTweet(tweet, tweetOptions)}
-			${nextHtml ? `<ol class="tweets-replies">${nextHtml}</ol>` : ""}
+			${nextHtml ? `<ol class="tweets-replies hfeed">${nextHtml}</ol>` : ""}
 		</ol>`;
 	}
 

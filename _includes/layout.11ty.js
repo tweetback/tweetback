@@ -48,7 +48,8 @@ module.exports = async function(data) {
 			<link rel="stylesheet" href="/assets/chart.css">
 			<script src="/assets/chartist.min.js"></script>
 			<script src="/assets/chart.js"></script>
-		` : ""}
+      <link rel="profile" href="http://microformats.org/profile/hatom">
+      ` : ""}
 
 		<link rel="stylesheet" href="/assets/style.css">
 		<script src="/assets/script.js" type="module"></script>
@@ -60,7 +61,7 @@ module.exports = async function(data) {
 		<header>
 			<h1 class="tweets-title"><a href="/"><img src="${metadata.avatar}" width="52" height="52" alt="${data.metadata.username}’s avatar" class="tweet-avatar">${data.metadata.username}’s Twitter Archive</a>${titleTweetNumberStr}</h1>
 			${!data.hideHeaderTweetsLink ? `<ul class="tweets-nav">
-				<li><a href="${data.metadata.homeUrl}">← ${data.metadata.homeLabel}</a></li>
+				<li><a rel="home" href="${data.metadata.homeUrl}">← ${data.metadata.homeLabel}</a></li>
 			</ul>`: ""}
 			${navHtml}
 		</header>
