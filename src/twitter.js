@@ -170,7 +170,7 @@ class Twitter {
 
 			for(let mention of tweet.entities.user_mentions) {
 				let usernameMatch = new RegExp(`@${mention.screen_name}`, "i");
-				text = text.replace(usernameMatch, `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username">${mention.screen_name}</a>`);
+				text = text.replace(usernameMatch, `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username h-card"><b class="p-nickname">${mention.screen_name}</b></a>`);
 			}
 		}
 
