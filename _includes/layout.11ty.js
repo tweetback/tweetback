@@ -48,17 +48,17 @@ module.exports = async function(data) {
 			<link rel="stylesheet" href="/assets/chart.css">
 			<script src="/assets/chartist.min.js"></script>
 			<script src="/assets/chart.js"></script>
-      <link rel="profile" href="http://microformats.org/profile/hatom">
-      ` : ""}
+			<link rel="profile" href="http://microformats.org/profile/hatom">
+			` : ""}
 
 		<link rel="stylesheet" href="/assets/style.css">
 		<script src="/assets/script.js" type="module"></script>
 		<script src="/assets/is-land.js" type="module"></script>
 
-    ${data.page.fileSlug === "newest" ? `
+		${data.page.fileSlug === "newest" ? `
 			<link rel="canonical" href="/${data.tweet.id_str}/">
 			<meta http-equiv="refresh" content="0; url=/${data.tweet.id_str}/">
-      ` : ""}
+			` : ""}
 	</head>
 	<body>
 		<header>
