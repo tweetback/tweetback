@@ -1,5 +1,5 @@
 const Sentiment = require("sentiment");
-const parseDomain = require("parse-domain");
+const { parseDomain } = require("parse-domain");
 const dataSource = require("./DataSource");
 const metadata = require("../_data/metadata.js");
 const eleventyImg = require("@11ty/eleventy-img");
@@ -59,12 +59,19 @@ class Twitter {
 		if(tweet.entities && tweet.entities.urls) {
 			for(let url of tweet.entities.urls) {
 				try {
-					let urlObj = new URL(url.expanded_url);
+					let urlObj = new URL(url.expanded_url ?? url.url);
 					let parsedDomain = parseDomain(urlObj.host);
+					let domain;
+					if (parsedDomain.topLevelDomains) {
+						const tld = parsedDomain.topLevelDomains.join(".");
+						domain = `${parsedDomain.domain}.${tld}`
+					} else {
+						domain = urlObj.host;
+					}
 					links.push({
 						host: urlObj.host,
 						origin: urlObj.origin,
-						domain: `${parsedDomain.domain}.${parsedDomain.tld}`
+						domain: domain
 					});
 				} catch(e) {
 					console.log( e );
@@ -98,13 +105,14 @@ class Twitter {
 	// }
 
 	getUrlObject(url) {
-		let displayUrl = url.expanded_url;
+		let expandedUrl = url.expanded_url ?? url.url;
+		let displayUrl = expandedUrl;
 		let className = "tweet-url";
-		let targetUrl = url.expanded_url;
+		let targetUrl = expandedUrl;
 
 		// Links to my tweets
 		if(displayUrl.startsWith(`https://twitter.com/${metadata.username}/status/`)) {
-			targetUrl = `/${url.expanded_url.substr(`https://twitter.com/${metadata.username}/status/`.length)}`;
+			targetUrl = `/${expandedUrl.substr(`https://twitter.com/${metadata.username}/status/`.length)}`;
 		}
 
 		// Links to other tweets
@@ -146,7 +154,7 @@ class Twitter {
 		// linkify urls
 		if( tweet.entities ) {
 			for(let url of tweet.entities.urls) {
-				if(url.expanded_url.indexOf(`/${tweet.id}/photo/`) > -1) { // || url.expanded_url.indexOf(`/${tweet.id}/video/`) > -1) {
+				if(url.expanded_url && url.expanded_url.indexOf(`/${tweet.id}/photo/`) > -1) {
 					text = text.replace(url.url, "");
 				} else {
 					let {targetUrl, className, displayUrl} = this.getUrlObject(url);
@@ -155,7 +163,7 @@ class Twitter {
 					text = text.replace(url.url, displayUrlHtml);
 
 					if(targetUrl.startsWith("https://") && !targetUrl.startsWith("https://twitter.com/")) {
-						medias.push(`<a href="${targetUrl}"><img src="https://v1.opengraph.11ty.dev/${encodeURIComponent(targetUrl)}/small/" alt="OpenGraph image for ${displayUrl}" loading="lazy" decoding="async" width="375" height="197" class="tweet-media tweet-media-og"></a>`);
+						medias.push(`<template data-island><a href="${targetUrl}"><img src="https://v1.opengraph.11ty.dev/${encodeURIComponent(targetUrl)}/small/onerror/" alt="OpenGraph image for ${displayUrl}" loading="lazy" decoding="async" width="375" height="197" class="tweet-media tweet-media-og" onerror="this.parentNode.remove()"></a></template>`);
 					}
 				}
 			}
@@ -202,7 +210,7 @@ class Twitter {
 			}
 		}
 		if(medias.length) {
-			text += `<div class="tweet-medias">${medias.join("")}</div>`;
+			text += `<is-land on:visible><div class="tweet-medias">${medias.join("")}</div></is-land>`;
 		}
 		return text;
 	}

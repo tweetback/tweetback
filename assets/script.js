@@ -10,3 +10,4 @@ function fallbackMedia(node) {
 	toReplace.parentNode.replaceChild(link, toReplace);
 }
 
+window.fallbackMedia = fallbackMedia;
