@@ -286,7 +286,7 @@ class Index extends Twitter {
 					<span>⬆️ 🙂<br>⬇️ 🙁</span>
 				</div>
 			</div>
-			<ol class="tweets tweets-linear-list hfeed" id="tweets-recent-home">
+			<ol class="tweets tweets-linear-list h-feed hfeed" id="tweets-recent-home">
 				${recentTweetsHtml.join("")}
 			</ol>
 		</div>
