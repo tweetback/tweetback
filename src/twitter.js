@@ -170,7 +170,7 @@ class Twitter {
 
 			for(let mention of tweet.entities.user_mentions) {
 				let usernameMatch = new RegExp(`@${mention.screen_name}`, "i");
-				text = text.replace(usernameMatch, `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username">${mention.screen_name}</a>`);
+				text = text.replace(usernameMatch, `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username h-card"><b class="p-nickname">${mention.screen_name}</b></a>`);
 			}
 		}
 
@@ -185,7 +185,7 @@ class Twitter {
 					try {
 						let stats = await eleventyImg(media.media_url_https, ELEVENTY_IMG_OPTIONS);
 						let imgRef = stats.jpeg[0];
-						imgHtml = `<img src="${imgRef.url}" width="${imgRef.width}" height="${imgRef.height}" alt="${media.alt_text || "oh my god twitter doesn’t include alt text from images in their API"}" class="tweet-media" onerror="fallbackMedia(this)" loading="lazy" decoding="async">`;
+						imgHtml = `<img src="${imgRef.url}" width="${imgRef.width}" height="${imgRef.height}" alt="${media.alt_text || "oh my god twitter doesn’t include alt text from images in their API"}" class="tweet-media u-featured" onerror="fallbackMedia(this)" loading="lazy" decoding="async">`;
 						medias.push(`<a href="${imgRef.url}">${imgHtml}</a>`);
 					} catch(e) {
 						console.log("Image request error", e.message);
@@ -200,7 +200,7 @@ class Twitter {
 						try {
 							let stats = await eleventyImg(media.media_url_https, ELEVENTY_IMG_OPTIONS);
 							let imgRef = stats.jpeg[0];
-							medias.push(`<video muted controls ${media.type === "animated_gif" ? "loop" : ""} src="${remoteVideoUrl}" poster="${imgRef.url}" class="tweet-media"></video>`);
+							medias.push(`<video muted controls ${media.type === "animated_gif" ? "loop" : ""} src="${remoteVideoUrl}" poster="${imgRef.url}" class="tweet-media u-video"></video>`);
 						} catch(e) {
 							console.log("Video request error", e.message);
 							medias.push(`<a href="${remoteVideoUrl}">${remoteVideoUrl}</a>`);
@@ -231,7 +231,7 @@ class Twitter {
 		return `${d.getFullYear()} ${months[d.getMonth()]} ${d.getDate()}`;
 	}
 
-	renderPercentage(count, total) {
+  renderPercentage(count, total) {
 		return `${(count * 100 / total).toFixed(1)}%`;
 	}
 
@@ -245,19 +245,19 @@ class Twitter {
 
 		let shareCount = parseInt(tweet.retweet_count, 10) + (tweet.quote_count ? tweet.quote_count : 0);
 
-		return `<li id="${tweet.id_str}" class="tweet${options.class ? ` ${options.class}` : ""}${this.isReply(tweet) && tweet.in_reply_to_screen_name !== metadata.username ? " is_reply " : ""}${this.isRetweet(tweet) ? " is_retweet" : ""}${this.isMention(tweet) ? " is_mention" : ""}">
-		${this.isReply(tweet) ? `<a href="${tweet.in_reply_to_screen_name !== metadata.username ? twitterLink(`https://twitter.com/${tweet.in_reply_to_screen_name}/status/${tweet.in_reply_to_status_id_str}`) : `/${tweet.in_reply_to_status_id_str}/`}" class="tweet-pretext">…in reply to @${tweet.in_reply_to_screen_name}</a>` : ""}
-			<div class="tweet-text">${await this.renderFullText(tweet, options)}</div>
+    return `<li id="${tweet.id_str}" class="tweet h-entry${options.class ? ` ${options.class}` : ""}${this.isReply(tweet) && tweet.in_reply_to_screen_name !== metadata.username ? " is_reply " : ""}${this.isRetweet(tweet) ? " is_retweet" : ""}${this.isMention(tweet) ? " is_mention" : ""}">
+		${this.isReply(tweet) ? `<a href="${tweet.in_reply_to_screen_name !== metadata.username ? twitterLink(`https://twitter.com/${tweet.in_reply_to_screen_name}/status/${tweet.in_reply_to_status_id_str}`) : `/${tweet.in_reply_to_status_id_str}/`}" class="tweet-pretext u-in-reply-to">…in reply to @${tweet.in_reply_to_screen_name}</a>` : ""}
+			<div class="tweet-text e-content">${await this.renderFullText(tweet, options)}</div>
 			<span class="tweet-metadata">
 				${!options.hidePermalink ? `<a href="/${tweet.id_str}/" class="tag tag-naked">Permalink</a>` : ""}
-				<a href="https://twitter.com/${metadata.username}/status/${tweet.id_str}" class="tag tag-icon"><span class="sr-only">On twitter.com </span><img src="${this.avatarUrl("https://twitter.com/")}" alt="Twitter logo" width="27" height="27"></a>
+				<a href="https://twitter.com/${metadata.username}/status/${tweet.id_str}" class="tag tag-icon u-url"><span class="sr-only">On twitter.com </span><img src="${this.avatarUrl("https://twitter.com/")}" alt="Twitter logo" width="27" height="27"></a>
 				${!this.isReply(tweet) ? (this.isRetweet(tweet) ? `<span class="tag tag-retweet">Retweet</span>` : (this.isMention(tweet) ? `<span class="tag">Mention</span>` : "")) : ""}
 				${!this.isRetweet(tweet) ? `<a href="/" class="tag tag-naked tag-lite tag-avatar"><img src="${metadata.avatar}" width="52" height="52" alt="${metadata.username}’s avatar" class="tweet-avatar"></a>` : ""}
 				${options.showPopularity && !this.isRetweet(tweet) ? `
 					${shareCount > 0 ? `<span class="tag tag-lite tag-retweet">♻️ ${this.renderNumber(shareCount)}<span class="sr-only"> Retweet${shareCount !== "1" ? "s" : ""}</span></span>` : ""}
 					${tweet.favorite_count > 0 ? `<span class="tag tag-lite tag-favorite">❤️ ${this.renderNumber(tweet.favorite_count)}<span class="sr-only"> Favorite${tweet.favorite_count !== "1" ? "s" : ""}</span></span>` : ""}
 				`.trim() : ""}
-				${tweet.date ? `<span class="tag tag-naked tag-lite">${this.renderDate(tweet.date)}</span>` : ""}
+				${tweet.date ? `<time class="tag tag-naked tag-lite dt-published" datetime="${tweet.date.toISOString()}">${this.renderDate(tweet.date)}</time>` : ""}
 				${!this.isRetweet(tweet) ?
 					`<span class="tag tag-naked tag-lite${!options.showSentiment || sentimentValue === 0 ? " sr-only" : ""}">Mood ` +
 						(sentimentValue > 0 ? "+" : "") +
@@ -303,10 +303,10 @@ class Twitter {
 		let previousAndNextTweetOptions = Object.assign({}, tweetOptions, { hidePermalink: false });
 		let previousHtml = await this.getReplyHtml(tweet, "previous", previousAndNextTweetOptions);
 		let nextHtml = await this.getReplyHtml(tweet, "next", previousAndNextTweetOptions);
-		return `<ol class="tweets tweets-thread">
-			${previousHtml ? `<ol class="tweets-replies">${previousHtml}</ol>` : ""}
+		return `<ol class="tweets tweets-thread h-feed hfeed">
+			${previousHtml ? `<ol class="tweets-replies h-feed hfeed">${previousHtml}</ol>` : ""}
 			${await this.renderTweet(tweet, tweetOptions)}
-			${nextHtml ? `<ol class="tweets-replies">${nextHtml}</ol>` : ""}
+			${nextHtml ? `<ol class="tweets-replies h-feed hfeed">${nextHtml}</ol>` : ""}
 		</ol>`;
 	}
 
