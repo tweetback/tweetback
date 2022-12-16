@@ -29,7 +29,7 @@ class Recent extends Twitter {
 			</div>
 		</div>
 		<h3>Tweets</h3>
-		<ol class="tweets tweets-linear-list">
+		<ol class="tweets tweets-linear-list h-feed hfeed">
 			${tweetHtml.join("")}
 		</ol>
 		<script>
