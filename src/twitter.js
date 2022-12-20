@@ -153,9 +153,22 @@ class Twitter {
 
 		// linkify urls
 		if( tweet.entities ) {
+			const YOUTUBE_ID_REGEX_PATTERN = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+
 			for(let url of tweet.entities.urls) {
 				if(url.expanded_url && url.expanded_url.indexOf(`/${tweet.id}/photo/`) > -1) {
 					text = text.replace(url.url, "");
+				} else if(YOUTUBE_ID_REGEX_PATTERN.test(url.expanded_url)) { //
+					const id = url.expanded_url.match(YOUTUBE_ID_REGEX_PATTERN)[1];
+					const searchParams = new URLSearchParams(new URL(url.expanded_url).search);
+
+					// Remove duplicate ID
+					if (searchParams.has('v')) {
+						searchParams.delete('v');
+					}
+
+					let displayUrlHtml = `<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/${id}${searchParams.keys().length ? '?' + searchParams.toString() : ''}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen crossorigin="anonymous" />`
+					text = text.replace(url.url, displayUrlHtml);
 				} else {
 					let {targetUrl, className, displayUrl} = this.getUrlObject(url);
 					targetUrl = twitterLink(targetUrl);
