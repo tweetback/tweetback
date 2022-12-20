@@ -123,7 +123,7 @@ class Index extends Twitter {
 
 	getHashTagsFromText(text = "") {
 		let words = {};
-		let splits = text.split(/(\#[A-Za-z][^\s\.\'\"\!\,\?\;\}\{]*)/g);
+		let splits = text.split(/(\#[A-Za-z][^\s\.\'\"\!\,\?\;\}\{\)]*)/g);
 		for(let split of splits) {
 			if(split.startsWith("#")) {
 				let tag = split.substr(1).toLowerCase();
