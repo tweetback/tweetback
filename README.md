@@ -42,6 +42,7 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 ### Build the web site
 
 1. Edit the `_data/metadata.js` file to add metadata information.
+1. (If you want the web site to live in a subdirectory, such as `/twitter/`, edit `eleventy.config.js` and add the line `return {pathPrefix: "/twitter/"}` at the end of the main function.)
 1. Run `npm run build` or `npm start`
 
 ⚠️ _Warning_: the first build may take quite a long time (depending on the size of your archive), as remote media is fetched/downloaded into your project locally. Repeat builds will be much faster.
