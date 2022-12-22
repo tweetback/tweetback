@@ -263,19 +263,15 @@ class Index extends Twitter {
 			<span class="tweets-primary-count-num">${this.renderNumber(tweetCount)}</span> tweet${tweetCount !== 1 ? "s" : ""}
 		</h2>
 
-		<form class="js" method="get" id="search-url">
-			<h2>Search for <label for="tweet-url">Tweet URL</label>:</h2>
+		<div class="js">
+			<h2>Search Tweets:</h2>
 			<div class="tweets-search">
-				<div class="lo" style="--lo-margin-h: 1em; align-items: center;">
-					<div class="lo-c" style="flex-grow: 100">
-						<input type="url" id="tweet-url" required placeholder="Tweet URL" style="width: 100%">
-					</div>
-					<div class="lo-c" style="flex-grow: .001;">
-						<button type="submit">Search</button>
-					</div>
-				</div>
+				<link href="/_pagefind/pagefind-ui.css" rel="stylesheet">
+				<script src="/_pagefind/pagefind-ui.js" type="text/javascript"></script>
+				<div id="search" class="tweets-search"></div>
+				<script>new PagefindUI({ element: "#search" });</script>
 			</div>
-		</form>
+		</div>
 
 		<div>
 			<h2><a href="/recent/">Recent:</a></h2>
@@ -286,7 +282,7 @@ class Index extends Twitter {
 					<span>⬆️ 🙂<br>⬇️ 🙁</span>
 				</div>
 			</div>
-			<ol class="tweets tweets-linear-list" id="tweets-recent-home">
+			<ol class="tweets tweets-linear-list h-feed hfeed" id="tweets-recent-home">
 				${recentTweetsHtml.join("")}
 			</ol>
 		</div>
@@ -371,24 +367,10 @@ class Index extends Twitter {
 		<p>***: does not include retweets</p>
 
 		<script>
-		var searchForm = document.getElementById("search-url");
-		if(searchForm) {
-			searchForm.addEventListener("submit", function(e) {
-				e.preventDefault();
-
-				var urlInput = searchForm.querySelector('input[type="url"]');
-				if(urlInput && urlInput.value) {
-					var tweetIdMatch = urlInput.value.match(/\\/(\\d+)/);
-					if(tweetIdMatch && tweetIdMatch.length) {
-						document.location.href = "/" + tweetIdMatch[1] + "/";
-					}
-				}
-			}, false);
-		}
-
 		var series = getSentimentsFromList( '#tweets-recent-home' );
 		makeSentimentChart( '.twtr-sentiment-chart', series );
 		</script>
+		<template id="rendered-twitter-link"><a href="/1234567890123456789/">twitter link</a></template>
 `;
 		// <h3>Before 2012, it was not possible to tell the difference between a mention and reply. This happened ${this.renderNumber(ambiguousReplyMentionCount)} times (${this.renderPercentage(ambiguousReplyMentionCount, tweetCount)})</h3>
 

@@ -26,11 +26,18 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 
 ## Usage
 
+* Clone/download this repository
+* In your terminal, `cd` to the folder of the project
+* Install [Node.js](https://nodejs.org/)
+* Run `npm install`
+
 ### Populate the database from your Twitter Archive zip
 
-1. Copy `./data/tweets.js` from your Twitter Archive `zip` file into the `./database` directory of this project.
-1. Rename `window.YTD.tweet.part0` in `tweets.js` to `module.exports`
-1. Run `npm run import`
+1. Copy `./data/tweets.js` from your [Twitter Archive](https://help.twitter.com/en/managing-your-account/how-to-download-your-twitter-archive) `zip` file into the `./database` directory of this project.
+   * Rename `window.YTD.tweet.part0` in `tweets.js` to `module.exports`
+1. If you want to exclude Twitter Circles tweets (these are included in the archive, why 😭): copy `./data/twitter-circle-tweet.js` from your Twitter Archive `zip` file into the `./database` directory of this project.
+   * Rename `window.YTD.tweet.part0` in `twitter-circle-tweet.js` to `module.exports`
+1. Run `npm run import` or `npm run import-without-circles`
 
 ### Build the web site
 
@@ -38,12 +45,20 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 1. (If you want the web site to live in a subdirectory, such as `/twitter/`, edit `eleventy.config.js` and add the line `return {pathPrefix: "/twitter/"}` at the end of the main function.)
 1. Run `npm run build` or `npm start`
 
-Note that the first build may take quite a long time (depending on the size of your archive), as remote media is fetched/downloaded into your project locally. Repeat builds will be much faster.
+⚠️ _Warning_: the first build may take quite a long time (depending on the size of your archive), as remote media is fetched/downloaded into your project locally. Repeat builds will be much faster.
 
-### Fetch additional tweets from the API
+### Fetch additional tweets from the API (optional)
 
 If you want to fetch additional tweets from the API and put them into your sqlite database:
 
-1. You will need a twitter developer token an a `TWITTER_BEARER_TOKEN` environment variable (from the Twitter API v2).
+1. You will need a twitter developer token an a `TWITTER_BEARER_TOKEN` environment variable (from the Twitter API v2). Read more about [App-only Bearer Tokens](https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens).
 1. Run `npm run fetch-new-data`
+
+### Add your production URL to `@tweetback/canonical` (optional)
+
+https://github.com/tweetback/tweetback-canonical has a `mapping.js` file that stores the existing twitter username => canonical URL mappings. These will be transformed automatically to point to other archives in all `tweetback` instances.
+
+### Publish your archive (optional)
+
+- To [GitHub Pages](docs/deploy-with-github-pages.md)
 

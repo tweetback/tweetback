@@ -5,6 +5,7 @@
   "scripts": {
     "clean": "rm -rf .cache",
     "import": "node database/import-from-archive.js",
+    "import-without-circles": "npm run import -- removecircletweets",
     "fetch-new-data": "node database/fetchFromApi.js",
     "build": "npx @11ty/eleventy --quiet",
     "start": "npx @11ty/eleventy --quiet --serve"
@@ -15,22 +16,24 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@11ty/eleventy": "2.0.0-canary.18",
+    "@11ty/eleventy": "2.0.0-canary.23",
     "@11ty/eleventy-fetch": "^3.0.0",
     "@11ty/eleventy-img": "^2.0.1",
-    "@tweetback/canonical": "^2.0.0",
+    "@tweetback/canonical": "^2.0.20",
     "country-emoji": "^1.5.6",
-    "dotenv": "^9.0.2",
-    "emoji-regex": "^8.0.0",
+    "dotenv": "^16.0.3",
+    "emoji-regex": "^10.2.1",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
-    "parse-domain": "^2.3.2",
+    "pagefind": "^0.10.6",
+    "parse-domain": "^5.0.0",
     "sentiment": "^5.0.2",
-    "sqlite3": "^5.1.2",
+    "sqlite3": "^5.1.4",
     "swearjar": "^0.2.0",
     "twitter-lite": "^1.1.0"
   },
   "dependencies": {
+    "@11ty/is-land": "^3.0.0",
     "chartist": "^0.11.4"
   }
 }

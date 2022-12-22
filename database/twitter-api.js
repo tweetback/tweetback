@@ -45,7 +45,6 @@ async function TwitterApiFetchUserId(username, cacheDuration) {
 
 	service.setParams({
 		usernames: username,
-		"user.fields": "created_at,description",
 	});
 
 	let {data} = await service.fetch(cacheDuration);

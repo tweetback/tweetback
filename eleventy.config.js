@@ -1,5 +1,6 @@
 const numeral = require("numeral");
 const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
+const { execSync } = require('child_process')
 
 module.exports = function(eleventyConfig) {
 	eleventyConfig.ignores.add("README.md");
@@ -10,6 +11,11 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({
 		"node_modules/chartist/dist/chartist.min.css": "assets/chartist.min.css",
 		"node_modules/chartist/dist/chartist.min.js": "assets/chartist.min.js",
+		"node_modules/@11ty/is-land/is-land.js": "assets/is-land.js",
+	});
+
+	eleventyConfig.addJavaScriptFunction("avatarUrl", function avatarUrl(url) {
+		return `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(url)}/`;
 	});
 
 	eleventyConfig.addJavaScriptFunction("renderNumber", function renderNumber(num) {
@@ -20,4 +26,10 @@ module.exports = function(eleventyConfig) {
 	});
 
 	eleventyConfig.addPlugin(EleventyHtmlBasePlugin);
+
+	// pagefind search
+	eleventyConfig.on('eleventy.after', () => {
+		console.log('indexing search using pagefind');
+		execSync(`npx pagefind --source _site --glob \"[0-9]*/**/*.html\"`, { encoding: 'utf-8' });
+  });
 };
