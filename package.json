@@ -1,5 +1,5 @@
 {
-  "name": "tweetback",
+  "name": "@tweetback/tweetback",
   "version": "1.0.0",
   "private": true,
   "description": "Take ownership of your Twitter data and host your own Twitter archive.",
