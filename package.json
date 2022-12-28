@@ -1,6 +1,7 @@
 {
   "name": "tweetback",
   "version": "1.0.0",
+  "private": true,
   "description": "Take ownership of your Twitter data and host your own Twitter archive.",
   "scripts": {
     "clean": "rm -rf .cache",
