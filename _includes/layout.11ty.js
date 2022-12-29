@@ -54,7 +54,7 @@ module.exports = async function(data) {
 			<link rel="stylesheet" href="/assets/chart.css">
 			<script src="/assets/chartist.min.js"></script>
 			<script src="/assets/chart.js"></script>
-			<link rel="profile" href="http://microformats.org/profile/hatom">
+			<link rel="profile" href="https://microformats.org/profile/hatom">
 			` : ""}
 
 		<link rel="stylesheet" href="/assets/style.css">
