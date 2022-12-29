@@ -4,10 +4,13 @@ const { execSync } = require('child_process')
 
 module.exports = function(eleventyConfig) {
 	eleventyConfig.ignores.add("README.md");
-	eleventyConfig.setServerPassthroughCopyBehavior("copy");
+
+	// eleventyConfig.setServerPassthroughCopyBehavior("copy");
 
 	eleventyConfig.addPassthroughCopy("assets/");
 	eleventyConfig.addPassthroughCopy("img/");
+	eleventyConfig.addPassthroughCopy("video/");
+
 	eleventyConfig.addPassthroughCopy({
 		"node_modules/chartist/dist/chartist.min.css": "assets/chartist.min.css",
 		"node_modules/chartist/dist/chartist.min.js": "assets/chartist.min.js",

@@ -3,6 +3,13 @@ const { parseDomain } = require("parse-domain");
 const dataSource = require("./DataSource");
 const metadata = require("../_data/metadata.js");
 const eleventyImg = require("@11ty/eleventy-img");
+const eleventyFetch = require("@11ty/eleventy-fetch");
+const fs = require("fs");
+const fsp = fs.promises;
+
+const ELEVENTY_VIDEO_OPTIONS = {
+	duration: "*"
+};
 
 const ELEVENTY_IMG_OPTIONS = {
 	widths: [null],
@@ -159,7 +166,7 @@ class Twitter {
 				} else {
 					let {targetUrl, className, displayUrl} = this.getUrlObject(url);
 					targetUrl = twitterLink(targetUrl);
-					let displayUrlHtml = `<a href="${targetUrl}" class="${className}"data-pagefind-index-attrs="href">${displayUrl}</a>`
+					let displayUrlHtml = `<a href="${targetUrl}" class="${className}" data-pagefind-index-attrs="href">${displayUrl}</a>`
 					text = text.replace(url.url, displayUrlHtml);
 
 					if(targetUrl.startsWith("https://") && !targetUrl.startsWith("https://twitter.com/")) {
@@ -195,12 +202,33 @@ class Twitter {
 					if(media.video_info && media.video_info.variants) {
 						text = text.replace(media.url, "");
 
-						let remoteVideoUrl = media.video_info.variants[0].url;
+						let videoResults = media.video_info.variants.filter(video => {
+							return video.content_type === "video/mp4" && video.url;
+						}).sort((a, b) => {
+							return parseInt(b.bitrate) - parseInt(a.bitrate);
+						});
+
+						if(videoResults.length === 0) {
+							continue;
+						}
+
+						let remoteVideoUrl = videoResults[0].url;
 
 						try {
-							let stats = await eleventyImg(media.media_url_https, ELEVENTY_IMG_OPTIONS);
-							let imgRef = stats.jpeg[0];
-							medias.push(`<video muted controls ${media.type === "animated_gif" ? "loop" : ""} src="${remoteVideoUrl}" poster="${imgRef.url}" class="tweet-media u-video"></video>`);
+							let videoUrl = remoteVideoUrl;
+							let posterStats = await eleventyImg(media.media_url_https, ELEVENTY_IMG_OPTIONS);
+							if(!this.isRetweet(tweet)) {
+								videoUrl = `/video/${tweet.id}.mp4`;
+
+								let videoBuffer = await eleventyFetch(remoteVideoUrl, ELEVENTY_VIDEO_OPTIONS);
+								let videoPath = `.${videoUrl}`;
+								if(!fs.existsSync(videoPath)) {
+									await fsp.writeFile(videoPath, videoBuffer);
+								}
+							}
+
+							let imgRef = posterStats.jpeg[0];
+							medias.push(`<video muted controls ${media.type === "animated_gif" ? "loop" : ""} src="${videoUrl}" poster="${imgRef.url}" class="tweet-media u-video"></video>`);
 						} catch(e) {
 							console.log("Video request error", e.message);
 							medias.push(`<a href="${remoteVideoUrl}">${remoteVideoUrl}</a>`);
