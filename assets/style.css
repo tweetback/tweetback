@@ -166,9 +166,6 @@ button {
 	color: inherit;
 	font-size: 0.9545454545455em; /* 21px /22 */
 }
-.tweet-username:before {
-	content: "@";
-}
 .tweet-pretext {
 	display: block;
 	font-style: italic;

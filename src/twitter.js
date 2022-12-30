@@ -127,6 +127,7 @@ class Twitter {
 		if(displayUrl.startsWith("https://twitter.com") && displayUrl.indexOf("/status/") > -1) {
 			displayUrl = displayUrl.substring("https://twitter.com/".length);
 			displayUrl = displayUrl.replace("/status/", "/");
+			displayUrl = `@${displayUrl}`;
 			// displayUrl = displayUrl.replace(/(\d+)/, function(match) {
 			// 	return "" + (match.length > 6 ? "…" : "") + match.substr(-6);
 			// });
@@ -191,7 +192,7 @@ class Twitter {
 			for(let mention of tweet.entities.user_mentions) {
 				textReplacements.set(mention.screen_name, {
 					regex: new RegExp(`@${mention.screen_name}`, "i"),
-					html: `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username h-card"><span class="p-nickname">${mention.screen_name}</span></a>`,
+					html: `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username h-card">@<span class="p-nickname">${mention.screen_name}</span></a>`,
 				});
 			}
 		}
@@ -303,7 +304,7 @@ class Twitter {
 
     return `<li id="${tweet.id_str}" class="tweet h-entry${options.class ? ` ${options.class}` : ""}${this.isReply(tweet) && tweet.in_reply_to_screen_name !== metadata.username ? " is_reply " : ""}${this.isRetweet(tweet) ? " is_retweet" : ""}${this.isMention(tweet) ? " is_mention" : ""}" data-pagefind-index-attrs="id">
 		${this.isReply(tweet) ? `<a href="${tweet.in_reply_to_screen_name !== metadata.username ? twitterLink(`https://twitter.com/${tweet.in_reply_to_screen_name}/status/${tweet.in_reply_to_status_id_str}`) : `/${tweet.in_reply_to_status_id_str}/`}" class="tweet-pretext u-in-reply-to">…in reply to @${tweet.in_reply_to_screen_name}</a>` : ""}
-			<div class="tweet-text e-content">${await this.renderFullText(tweet, options)}</div>
+			<div class="tweet-text e-content"${options.attributes || ""}>${await this.renderFullText(tweet, options)}</div>
 			<span class="tweet-metadata">
 				${!options.hidePermalink ? `<a href="/${tweet.id_str}/" class="tag tag-naked">Permalink</a>` : ""}
 				<a href="https://twitter.com/${metadata.username}/status/${tweet.id_str}" class="tag tag-icon u-url" data-pagefind-index-attrs="href"><span class="sr-only">On twitter.com </span><img src="${this.avatarUrl("https://twitter.com/")}" alt="Twitter logo" width="27" height="27"></a>
@@ -359,6 +360,9 @@ class Twitter {
 		let previousAndNextTweetOptions = Object.assign({}, tweetOptions, { hidePermalink: false });
 		let previousHtml = await this.getReplyHtml(tweet, "previous", previousAndNextTweetOptions);
 		let nextHtml = await this.getReplyHtml(tweet, "next", previousAndNextTweetOptions);
+
+		tweetOptions.attributes = " data-pagefind-body";
+
 		return `<ol class="tweets tweets-thread h-feed hfeed" data-pagefind-body>
 			${previousHtml ? `<ol class="tweets-replies h-feed hfeed">${previousHtml}</ol>` : ""}
 			${await this.renderTweet(tweet, tweetOptions)}
