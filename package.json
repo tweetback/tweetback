@@ -24,6 +24,7 @@
     "country-emoji": "^1.5.6",
     "dotenv": "^16.0.3",
     "emoji-regex": "^10.2.1",
+    "entities": "^4.4.0",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
     "pagefind": "^0.10.6",

@@ -6,6 +6,7 @@ const eleventyImg = require("@11ty/eleventy-img");
 const eleventyFetch = require("@11ty/eleventy-fetch");
 const fs = require("fs");
 const fsp = fs.promises;
+const { escapeAttribute } = require("entities/lib/escape.js");
 
 const ELEVENTY_VIDEO_OPTIONS = {
 	duration: "*"
@@ -148,27 +149,39 @@ class Twitter {
 		}
 	}
 
-	async renderFullText(tweet) {
+	async getImage(remoteImageUrl, alt) {
+		// TODO the await use here on eleventyImg could be improved
+		let stats = await eleventyImg(remoteImageUrl, ELEVENTY_IMG_OPTIONS);
+		let imgRef = stats.jpeg[0];
+		return `<a href="${imgRef.url}"><img src="${imgRef.url}" width="${imgRef.width}" height="${imgRef.height}" alt="${escapeAttribute(alt) || "oh my god twitter doesn’t include alt text from images in their API"}" class="tweet-media u-featured" onerror="fallbackMedia(this)" loading="lazy" decoding="async"></a>`;
+	}
+
+	async saveVideo(remoteVideoUrl, localVideoPath) {
+		let videoBuffer = await eleventyFetch(remoteVideoUrl, ELEVENTY_VIDEO_OPTIONS);
+
+		if(!fs.existsSync(localVideoPath)) {
+			await fsp.writeFile(localVideoPath, videoBuffer);
+		}
+	}
+
+	async getMedia(tweet) {
 		let {transform: twitterLink} = await import("@tweetback/canonical");
-		let text = tweet.full_text;
-
-		// Markdown
-		// replace `*` with <code>*</code>
-		text = text.replace(/\`([^\`]*)\`/g, "<code>$1</code>");
-
 		let medias = [];
+		let textReplacements = new Map();
 
 		// linkify urls
 		if( tweet.entities ) {
 			for(let url of tweet.entities.urls) {
+				// Remove photo URLs
 				if(url.expanded_url && url.expanded_url.indexOf(`/${tweet.id}/photo/`) > -1) {
-					text = text.replace(url.url, "");
+					textReplacements.set(url.url, { html: "" });
 				} else {
 					let {targetUrl, className, displayUrl} = this.getUrlObject(url);
 					targetUrl = twitterLink(targetUrl);
-					let displayUrlHtml = `<a href="${targetUrl}" class="${className}" data-pagefind-index-attrs="href">${displayUrl}</a>`
-					text = text.replace(url.url, displayUrlHtml);
 
+					textReplacements.set(url.url, { html: `<a href="${targetUrl}" class="${className}" data-pagefind-index-attrs="href">${displayUrl}</a>` });
+
+					// Add opengraph preview
 					if(targetUrl.startsWith("https://") && !targetUrl.startsWith("https://twitter.com/")) {
 						medias.push(`<template data-island><a href="${targetUrl}"><img src="https://v1.opengraph.11ty.dev/${encodeURIComponent(targetUrl)}/small/onerror/" alt="OpenGraph image for ${displayUrl}" loading="lazy" decoding="async" width="375" height="197" class="tweet-media tweet-media-og" onerror="this.parentNode.remove()"></a></template>`);
 					}
@@ -176,8 +189,10 @@ class Twitter {
 			}
 
 			for(let mention of tweet.entities.user_mentions) {
-				let usernameMatch = new RegExp(`@${mention.screen_name}`, "i");
-				text = text.replace(usernameMatch, `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username h-card"><b class="p-nickname">${mention.screen_name}</b></a>`);
+				textReplacements.set(mention.screen_name, {
+					regex: new RegExp(`@${mention.screen_name}`, "i"),
+					html: `<a href="${twitterLink(`https://twitter.com/${mention.screen_name}/`)}" class="tweet-username h-card"><span class="p-nickname">${mention.screen_name}</span></a>`,
+				});
 			}
 		}
 
@@ -185,22 +200,18 @@ class Twitter {
 			for(let media of tweet.extended_entities.media ) {
 				if(media.type === "photo") {
 					// remove photo URL
-					text = text.replace(media.url, "");
+					textReplacements.set(media.url, { html: "" });
 
-					let imgHtml = "";
-					// TODO the await use here on eleventyImg could be improved
 					try {
-						let stats = await eleventyImg(media.media_url_https, ELEVENTY_IMG_OPTIONS);
-						let imgRef = stats.jpeg[0];
-						imgHtml = `<img src="${imgRef.url}" width="${imgRef.width}" height="${imgRef.height}" alt="${media.alt_text || "oh my god twitter doesn’t include alt text from images in their API"}" class="tweet-media u-featured" onerror="fallbackMedia(this)" loading="lazy" decoding="async">`;
-						medias.push(`<a href="${imgRef.url}">${imgHtml}</a>`);
+						let html = await this.getImage(media.media_url_https, media.alt_text || "");
+						medias.push(html);
 					} catch(e) {
 						console.log("Image request error", e.message);
 						medias.push(`<a href="${media.media_url_https}">${media.media_url_https}</a>`);
 					}
 				} else if(media.type === "animated_gif" || media.type === "video") {
 					if(media.video_info && media.video_info.variants) {
-						text = text.replace(media.url, "");
+						textReplacements.set(media.url, { html: "" });
 
 						let videoResults = media.video_info.variants.filter(video => {
 							return video.content_type === "video/mp4" && video.url;
@@ -220,11 +231,7 @@ class Twitter {
 							if(!this.isRetweet(tweet)) {
 								videoUrl = `/video/${tweet.id}.mp4`;
 
-								let videoBuffer = await eleventyFetch(remoteVideoUrl, ELEVENTY_VIDEO_OPTIONS);
-								let videoPath = `.${videoUrl}`;
-								if(!fs.existsSync(videoPath)) {
-									await fsp.writeFile(videoPath, videoBuffer);
-								}
+								await this.saveVideo(remoteVideoUrl, `.${videoUrl}`)
 							}
 
 							let imgRef = posterStats.jpeg[0];
@@ -237,9 +244,30 @@ class Twitter {
 				}
 			}
 		}
+
+		return {
+			medias,
+			textReplacements,
+		}
+	}
+
+	async renderFullText(tweet) {
+		let text = tweet.full_text;
+
+		// Markdown
+		// replace `*` with <code>*</code>
+		text = text.replace(/\`([^\`]*)\`/g, "<code>$1</code>");
+
+		let {medias, textReplacements} = await this.getMedia(tweet);
+
+		for(let [key, {regex, html}] of textReplacements) {
+			text = text.replace(regex || key, html);
+		}
+
 		if(medias.length) {
 			text += `<is-land on:visible><div class="tweet-medias">${medias.join("")}</div></is-land>`;
 		}
+
 		return text;
 	}
 
