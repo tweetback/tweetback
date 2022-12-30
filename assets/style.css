@@ -246,6 +246,7 @@ img.tweet-media {
 	border: 1px solid #ccc;
 }
 video.tweet-media {
+	max-width: 100%;
 	width: auto;
 	max-height: 10em;
 }
@@ -265,6 +266,11 @@ a[href]:hover .tweet-media-load-error {
 		height: 100%;
 		object-fit: cover;
 		object-position: top;
+	}
+}
+@supports (object-fit: contain) {
+	video.tweet-media {
+		object-fit: contain;
 	}
 }
 .tweet-previous .tweet-medias,
