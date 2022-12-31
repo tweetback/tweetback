@@ -33,13 +33,6 @@ footer {
 	white-space: nowrap !important;
 	border: 0 !important;
 }
-.js {
-	display: none;
-}
-.has-js .js {
-	display: initial;
-	display: block;
-}
 input,
 button {
 	font-size: inherit;

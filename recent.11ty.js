@@ -20,22 +20,11 @@ class Recent extends Twitter {
 
 		return `<h2>Most Recent 40 Tweets</h2>
 		<p>Not including replies or retweets or mentions.</p>
-		<h3>Mood</h3>
-		<div class="twtr-sentiment js">
-			<div class="twtr-sentiment-chart ct-chart"></div>
-			<div class="twtr-sentiment-label">
-				⬅️ New
-				<span>⬆️ 🙂<br>⬇️ 🙁</span>
-			</div>
-		</div>
+
 		<h3>Tweets</h3>
 		<ol class="tweets tweets-linear-list h-feed hfeed">
 			${tweetHtml.join("")}
-		</ol>
-		<script>
-		var series = getSentimentsFromList( '.tweets' );
-		makeSentimentChart( '.twtr-sentiment-chart', series );
-		</script>`;
+		</ol>`;
 	}
 }
 

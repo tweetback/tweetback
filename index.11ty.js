@@ -276,13 +276,7 @@ class Index extends Twitter {
 
 		<div>
 			<h2><a href="/recent/">Recent:</a></h2>
-			<div class="twtr-sentiment twtr-sentiment-max js">
-				<div class="twtr-sentiment-chart ct-chart"></div>
-				<div class="twtr-sentiment-label">
-					⬅️ New
-					<span>⬆️ 🙂<br>⬇️ 🙁</span>
-				</div>
-			</div>
+
 			<ol class="tweets tweets-linear-list h-feed hfeed" id="tweets-recent-home">
 				${recentTweetsHtml.join("")}
 			</ol>
@@ -367,10 +361,6 @@ class Index extends Twitter {
 		<p><em>${this.renderNumber(swearCount)} swear words on ${this.renderNumber(tweetSwearCount)} tweets (${this.renderPercentage(tweetSwearCount, noRetweetsTweetCount)} of all tweets***)</em></p>
 		<p>***: does not include retweets</p>
 
-		<script>
-		var series = getSentimentsFromList( '#tweets-recent-home' );
-		makeSentimentChart( '.twtr-sentiment-chart', series );
-		</script>
 		<template id="rendered-twitter-link"><a href="/1234567890123456789/">twitter link</a></template>
 `;
 		// <h3>Before 2012, it was not possible to tell the difference between a mention and reply. This happened ${this.renderNumber(ambiguousReplyMentionCount)} times (${this.renderPercentage(ambiguousReplyMentionCount, tweetCount)})</h3>

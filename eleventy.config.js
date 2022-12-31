@@ -12,8 +12,6 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy("video/");
 
 	eleventyConfig.addPassthroughCopy({
-		"node_modules/chartist/dist/chartist.min.css": "assets/chartist.min.css",
-		"node_modules/chartist/dist/chartist.min.js": "assets/chartist.min.js",
 		"node_modules/@11ty/is-land/is-land.js": "assets/is-land.js",
 	});
 
