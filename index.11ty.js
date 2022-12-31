@@ -263,18 +263,16 @@ class Index extends Twitter {
 			<span class="tweets-primary-count-num">${this.renderNumber(tweetCount)}</span> tweet${tweetCount !== 1 ? "s" : ""}
 		</h2>
 
-		<div class="js">
-			<h2>Search Tweets:</h2>
-			<div class="tweets-search">
-				<is-land on:visible>
-					<template data-island>
-						<div id="search" class="tweets-search"></div>
-						<link href="/_pagefind/pagefind-ui.css" rel="stylesheet">
-						<script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false });"></script>
-					</template>
-				</is-land>
-			</div>
-		</div>
+		<is-land on:visible on:save-data="false">
+			<template data-island>
+				<h2>Search Tweets:</h2>
+				<div class="tweets-search">
+					<div id="search" class="tweets-search"></div>
+					<link href="/_pagefind/pagefind-ui.css" rel="stylesheet">
+					<script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false });"></script>
+				</div>
+			</template>
+		</is-land>
 
 		<div>
 			<h2><a href="/recent/">Recent:</a></h2>
