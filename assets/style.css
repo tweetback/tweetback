@@ -5,10 +5,11 @@ html {
 	height: 100%;
 }
 body {
+	max-width: 60em;
 	min-height: 100%;
 	font-family: system-ui, sans-serif;
-	margin: 0;
-	padding: .5em .5em ;
+	margin: 0 auto;
+	padding: .5em;
 }
 footer {
 	font-size: 0.875em; /* 14px /16 */
