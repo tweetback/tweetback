@@ -1,4 +1,5 @@
 const swearjar = require("swearjar");
+const twitter = require("twitter-text");
 const metadata = require("./_data/metadata.js");
 const Twitter = require("./src/twitter");
 const EmojiAggregator = require( "./src/EmojiAggregator" );
@@ -123,15 +124,13 @@ class Index extends Twitter {
 
 	getHashTagsFromText(text = "") {
 		let words = {};
-		let splits = text.split(/(\#[A-Za-z][^\s\.\'\"\!\,\?\;\}\{]*)/g);
-		for(let split of splits) {
-			if(split.startsWith("#")) {
-				let tag = split.substr(1).toLowerCase();
-				if(!words[tag]) {
-					words[tag] = 0;
-				}
-				words[tag]++;
+		let hashtags = twitter.extractHashtags(text);
+		for(let hashtag of hashtags) {
+			let tag = hashtag.toLowerCase();
+			if(!words[tag]) {
+				words[tag] = 0;
 			}
+			words[tag]++;
 		}
 		return words;
 	}
