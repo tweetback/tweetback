@@ -2,6 +2,19 @@ require('dotenv').config();
 const { checkInDatabase, logTweetCount, saveToDatabaseApiV1, createTable } = require("./tweet-to-db");
 const shouldFilterOutCircleTweets = process.argv.includes('removecircletweets');
 const tweets = require("./tweets.js");
+
+// check for additional tweets (in the form of tweets-part1.js, etc)
+const extra = require("fs")
+  .readdirSync(__dirname)
+  .filter((_) => _.startsWith("tweets-part"));
+
+if (extra.length) {
+  for (let i = 0; i < extra.length; i++) {
+    const filename = extra[i];
+    tweets.push(...require("./" + filename));
+  }
+}
+
 let circleTweets;
 
 if (shouldFilterOutCircleTweets) {

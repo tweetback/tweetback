@@ -35,6 +35,7 @@ Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](
 
 1. Copy `./data/tweets.js` from your [Twitter Archive](https://help.twitter.com/en/managing-your-account/how-to-download-your-twitter-archive) `zip` file into the `./database` directory of this project.
    * Rename `window.YTD.tweet.part0` in `tweets.js` to `module.exports`
+1. If you `./data` directory includes any `tweets-part*.js` files, also copy these into `./database` and rename the `window.YTD.tweet.partX` (where `X` is a number) to `module.exports`
 1. If you want to exclude Twitter Circles tweets (these are included in the archive, why 😭): copy `./data/twitter-circle-tweet.js` from your Twitter Archive `zip` file into the `./database` directory of this project.
    * Rename `window.YTD.tweet.part0` in `twitter-circle-tweet.js` to `module.exports`
 1. Run `npm run import` or `npm run import-without-circles`
