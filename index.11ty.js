@@ -263,25 +263,20 @@ class Index extends Twitter {
 			<span class="tweets-primary-count-num">${this.renderNumber(tweetCount)}</span> tweet${tweetCount !== 1 ? "s" : ""}
 		</h2>
 
-		<div class="js">
-			<h2>Search Tweets:</h2>
-			<div class="tweets-search">
-				<link href="/_pagefind/pagefind-ui.css" rel="stylesheet">
-				<script src="/_pagefind/pagefind-ui.js" type="text/javascript"></script>
-				<div id="search" class="tweets-search"></div>
-				<script>new PagefindUI({ element: "#search" });</script>
-			</div>
-		</div>
+		<is-land on:visible on:save-data="false">
+			<template data-island>
+				<h2>Search Tweets:</h2>
+				<div class="tweets-search">
+					<div id="search" class="tweets-search"></div>
+					<link href="/_pagefind/pagefind-ui.css" rel="stylesheet">
+					<script src="/_pagefind/pagefind-ui.js" onload="new PagefindUI({ element: '#search', showImages: false });"></script>
+				</div>
+			</template>
+		</is-land>
 
 		<div>
 			<h2><a href="/recent/">Recent:</a></h2>
-			<div class="twtr-sentiment twtr-sentiment-max js">
-				<div class="twtr-sentiment-chart ct-chart"></div>
-				<div class="twtr-sentiment-label">
-					⬅️ New
-					<span>⬆️ 🙂<br>⬇️ 🙁</span>
-				</div>
-			</div>
+
 			<ol class="tweets tweets-linear-list h-feed hfeed" id="tweets-recent-home">
 				${recentTweetsHtml.join("")}
 			</ol>
@@ -366,10 +361,6 @@ class Index extends Twitter {
 		<p><em>${this.renderNumber(swearCount)} swear words on ${this.renderNumber(tweetSwearCount)} tweets (${this.renderPercentage(tweetSwearCount, noRetweetsTweetCount)} of all tweets***)</em></p>
 		<p>***: does not include retweets</p>
 
-		<script>
-		var series = getSentimentsFromList( '#tweets-recent-home' );
-		makeSentimentChart( '.twtr-sentiment-chart', series );
-		</script>
 		<template id="rendered-twitter-link"><a href="/1234567890123456789/">twitter link</a></template>
 `;
 		// <h3>Before 2012, it was not possible to tell the difference between a mention and reply. This happened ${this.renderNumber(ambiguousReplyMentionCount)} times (${this.renderPercentage(ambiguousReplyMentionCount, tweetCount)})</h3>

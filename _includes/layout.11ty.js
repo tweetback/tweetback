@@ -43,20 +43,8 @@ module.exports = async function(data) {
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>${data.metadata.username}’s Twitter Archive${titleTweetNumberStr}</title>
 		<meta name="description" content="${meta_description}" />
-		<script>
-		if("classList" in document.documentElement) {
-			document.documentElement.classList.add("has-js");
-		}
-		</script>
 
-		${data.page.fileSlug !== "tweet-pages" ? `
-			<link rel="stylesheet" href="/assets/chartist.min.css">
-			<link rel="stylesheet" href="/assets/chart.css">
-			<script src="/assets/chartist.min.js"></script>
-			<script src="/assets/chart.js"></script>
-			<link rel="profile" href="http://microformats.org/profile/hatom">
-			` : ""}
-
+		<link rel="profile" href="https://microformats.org/profile/hatom">
 		<link rel="stylesheet" href="/assets/style.css">
 		<script src="/assets/script.js" type="module"></script>
 		<script src="/assets/is-land.js" type="module"></script>

@@ -5,10 +5,11 @@ html {
 	height: 100%;
 }
 body {
+	max-width: 60em;
 	min-height: 100%;
 	font-family: system-ui, sans-serif;
-	margin: 0;
-	padding: .5em .5em ;
+	margin: 0 auto;
+	padding: .5em;
 }
 footer {
 	font-size: 0.875em; /* 14px /16 */
@@ -32,13 +33,6 @@ footer {
 	clip: rect(0, 0, 0, 0) !important;
 	white-space: nowrap !important;
 	border: 0 !important;
-}
-.js {
-	display: none;
-}
-.has-js .js {
-	display: initial;
-	display: block;
 }
 input,
 button {
@@ -166,9 +160,6 @@ button {
 	color: inherit;
 	font-size: 0.9545454545455em; /* 21px /22 */
 }
-.tweet-username:before {
-	content: "@";
-}
 .tweet-pretext {
 	display: block;
 	font-style: italic;
@@ -246,6 +237,7 @@ img.tweet-media {
 	border: 1px solid #ccc;
 }
 video.tweet-media {
+	max-width: 100%;
 	width: auto;
 	max-height: 10em;
 }
@@ -265,6 +257,11 @@ a[href]:hover .tweet-media-load-error {
 		height: 100%;
 		object-fit: cover;
 		object-position: top;
+	}
+}
+@supports (object-fit: contain) {
+	video.tweet-media {
+		object-fit: contain;
 	}
 }
 .tweet-previous .tweet-medias,
