@@ -6,7 +6,7 @@ Use the following steps to deploy the generated archive to [GitHub pages](https:
 0. After creation, navigate to the Settings tab of your new GitHub repository
 0. Navigate to the "Pages" page
 0. Enable GitHub pages by selecting your `main` branch
-0. Follow the [instructions to Build the web site](https://github.com/tweetback/tweetback#build-the-web-site)
+0. Follow the [instructions to Build the web site](https://github.com/tweetback/tweetback#build-the-web-site). Note: unless you use a custom domain, you will need to pass your repo's name as your `--pathprefix` option.
 0. Using a terminal, navigate into the `_site` folder
 0. Run `git init`
 0. Add the new repository as the origin: `git remote add origin git@github.com:USERNAME/REPO.git`
