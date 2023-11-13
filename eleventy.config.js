@@ -16,6 +16,9 @@ module.exports = function(eleventyConfig) {
 	});
 
 	eleventyConfig.addJavaScriptFunction("avatarUrl", function avatarUrl(url) {
+		if(url.startsWith("https://twitter.com/")) {
+			url = "https://x.com/" + url.slice("https://twitter.com/".length);
+		}
 		return `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(url)}/`;
 	});
 

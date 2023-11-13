@@ -2,6 +2,8 @@
 
 Take ownership of your Twitter data. First talked about at [Jamstack Conf 2019](https://www.zachleat.com/web/own-your-content/) and in [this blog post](https://www.zachleat.com/web/own-my-tweets/).
 
+* _Referenced on [Delete Twitter](https://deletetwitter.com/)!_
+
 ## Demos
 
 * https://www.zachleat.com/twitter/
