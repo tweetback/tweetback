@@ -289,6 +289,7 @@ class Index extends Twitter {
 			</ol>
 		</div>
 
+		${retweetCount > 0 ? `
 		<h2 id="retweets">I’ve retweeted other tweets ${this.renderNumber(retweetCount)} times (${this.renderPercentage(retweetCount, tweetCount)})</h2>
 		<div class="lo" style="--lo-stackpoint: 20em">
 			<div class="lo-c">
@@ -304,8 +305,12 @@ class Index extends Twitter {
 				</ol>
 			</div>
 		</div>
+		` : ""}
 
+		${replyCount > 0 || mentionNotReplyCount > 0 ? `
 		<h2 id="replies">Replies and Mentions</h2>
+		` : ""}
+		${replyCount > 0 ? `
 		<h3>${this.renderPercentage(replyCount, tweetCount)} of my tweets are replies (×${this.renderNumber(replyCount)})</h3>
 		<div class="lo" style="--lo-stackpoint: 20em">
 			<div class="lo-c">
@@ -321,11 +326,17 @@ class Index extends Twitter {
 				</ol>
 			</div>
 		</div>
+		` : ""}
+		${mentionNotReplyCount > 0 ? `
 		<h3>I’ve sent someone a mention ${this.renderNumber(mentionNotReplyCount)} times (${this.renderPercentage(mentionNotReplyCount, tweetCount)})</h3>
+		` : ""}
 
+		${linksCount > 0 ? `
 		<h2 id="links">Most Frequent Sites I’ve Linked To</h2>
 		<h3>${this.renderPercentage(httpsLinksCount, linksCount)} of the links I’ve posted are using the <code>https:</code> protocol  (${this.renderNumber(httpsLinksCount)} of ${this.renderNumber(linksCount)})</h3>
-		<h3>${this.renderPercentage(httpsLinksCount12Months, linksCount12Months)} of the links I’ve posted in the last 12 months are using the <code>https:</code> protocol  (${this.renderNumber(httpsLinksCount12Months)} of ${this.renderNumber(linksCount12Months)})</h3>
+			${linksCount12Months > 0 ? `
+			<h3>${this.renderPercentage(httpsLinksCount12Months, linksCount12Months)} of the links I’ve posted in the last 12 months are using the <code>https:</code> protocol  (${this.renderNumber(httpsLinksCount12Months)} of ${this.renderNumber(linksCount12Months)})</h3>
+			` : ""}
 
 		<div class="lo" style="--lo-stackpoint: 20em">
 			<div class="lo-c">
@@ -341,25 +352,36 @@ class Index extends Twitter {
 				</ol>
 			</div>
 		</div>
+		` : ""}
 
 		<h2 id="shared">My tweets have been given about <span class="tag tag-lite tag-retweet">♻️ ${this.renderNumber(retweetsEarnedCount)}</span> retweets and <span class="tag tag-lite tag-favorite">❤️ ${this.renderNumber(likesEarnedCount)}</span> likes</h2>
 
+		${emojis.length > 0 ? `
 		<h2 id="emoji">Top 5 Emoji Used in Tweets</h2>
 		<ol>
 			${emojis.slice(0, 5).map(obj => `<li>${obj.glyph} used ${obj.count} times on ${obj.tweetcount} tweets</li>`).join("")}
 		</ol>
 		<p><em>${this.renderNumber(emojis.length)} unique emoji on ${this.renderNumber(emoji.getTweetCount())} tweets (${this.renderPercentage(emoji.getTweetCount(), noRetweetsTweetCount)} of all tweets***)</em></p>
+		` : ""}
+
+		${hashCount > 0 ? `
 		<h2 id="hashtags">Top 5 Hashtags</h2>
 		<ol>
 			${topHashes.slice(0, 5).map(hash => `<li><code>${hash.tag}</code> used ${hash.count} times ${hash.count > 1 && hash.count > hash.tweets.length ? `on ${hash.tweets.length} tweet${hash.tweets.length !== 1 ? "s" : ""}` : ""}</li>`).join("")}
 		</ol>
 		<p><em>${this.renderNumber(hashCount)} hashtags on ${this.renderNumber(tweetHashCount)} tweets (${this.renderPercentage(tweetHashCount, noRetweetsTweetCount)} of all tweets***)</em></p>
+		` : ""}
+
+		${swearCount > 0 ? `
 		<h2 id="swears">Top 5 Swear Words</h2>
 		<ol>
 			${topSwears.slice(0, 5).map(swear => `<li><code>${this.renderSwearWord(swear.word)}</code> used ${swear.count} times ${swear.count > 1 && swear.count > swear.tweets.length ? `on ${swear.tweets.length} tweet${swear.tweets.length !== 1 ? "s" : ""}` : ""}</li>`).join("")}
 		</ol>
 		<p><em>${this.renderNumber(swearCount)} swear words on ${this.renderNumber(tweetSwearCount)} tweets (${this.renderPercentage(tweetSwearCount, noRetweetsTweetCount)} of all tweets***)</em></p>
+		` : ""}
+		${emojis.length > 0 || hashCount > 0 || swearCount > 0 ? `
 		<p>***: does not include retweets</p>
+		` : ""}
 
 		<template id="rendered-twitter-link"><a href="/1234567890123456789/">twitter link</a></template>
 `;
