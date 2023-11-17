@@ -56,6 +56,8 @@ If you want to fetch additional tweets from the API and put them into your sqlit
 1. You will need a twitter developer token an a `TWITTER_BEARER_TOKEN` environment variable (from the Twitter API v2). Read more about [App-only Bearer Tokens](https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens).
 1. Run `npm run fetch-new-data`
 
+_Note_: for this to work, your account must be publicly visible (active and not protected)
+
 ### Add your production URL to `@tweetback/canonical` (optional)
 
 https://github.com/tweetback/tweetback-canonical has a `mapping.js` file that stores the existing twitter username => canonical URL mappings. These will be transformed automatically to point to other archives in all `tweetback` instances.
