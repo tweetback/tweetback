@@ -32,7 +32,8 @@
     "sentiment": "^5.0.2",
     "sqlite3": "^5.1.6",
     "swearjar": "^0.2.0",
-    "twitter-lite": "^1.1.0"
+    "twitter-lite": "^1.1.0",
+    "twitter-text": "^3.1.0"
   },
   "dependencies": {
     "@11ty/is-land": "^4.0.0"
