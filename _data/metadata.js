@@ -1,5 +1,6 @@
 let data = {
 	username: "eleven_ty", // No leading @ here
+	displayname: "Eleventy",
 	homeLabel: "11ty.dev",
 	homeUrl: "https://www.11ty.dev/",
 };
