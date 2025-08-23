@@ -30,7 +30,7 @@ module.exports = async function(data) {
 		</ul>`;
 	}
 
-	let meta_description = `A read-only indieweb self-hosted archive of${ data.pagination && data.pagination.hrefs && data.pagination.hrefs.length ? ` all ${data.pagination.hrefs.length} of` : ""} ${data.metadata.username}’s tweets.`;
+	let meta_description = `A read-only indieweb self-hosted archive of${ data.pagination && data.pagination.hrefs && data.pagination.hrefs.length ? ` all ${data.pagination.hrefs.length} of` : ""} ${data.metadata.displayname}’s tweets.`;
 	if (data.page.fileSlug === "tweet-pages" && data.tweet && data.tweet.full_text) {
 		// note that data.tweet.full_text is already HTML-escaped
 		meta_description = data.tweet.full_text.replace(/\s+/g, " ");
@@ -41,7 +41,7 @@ module.exports = async function(data) {
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>${data.metadata.username}’s Twitter Archive${titleTweetNumberStr}</title>
+		<title>${data.metadata.displayname}’s Twitter Archive${titleTweetNumberStr}</title>
 		<meta name="description" content="${meta_description}" />
 
 		<link rel="profile" href="https://microformats.org/profile/hatom">
@@ -56,7 +56,7 @@ module.exports = async function(data) {
 	</head>
 	<body>
 		<header>
-			<h1 class="tweets-title"><a href="/"><img src="${metadata.avatar}" width="52" height="52" alt="${data.metadata.username}’s avatar" class="tweet-avatar">${data.metadata.username}’s Twitter Archive</a>${titleTweetNumberStr}</h1>
+			<h1 class="tweets-title"><a href="/"><img src="${metadata.avatar}" width="52" height="52" alt="${data.metadata.displayname}’s avatar" class="tweet-avatar">${data.metadata.displayname}’s Twitter Archive</a>${titleTweetNumberStr}</h1>
 			${!data.hideHeaderTweetsLink ? `<ul class="tweets-nav">
 				<li><a rel="home" href="${data.metadata.homeUrl}">← ${data.metadata.homeLabel}</a></li>
 			</ul>`: ""}
