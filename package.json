@@ -27,7 +27,7 @@
     "entities": "^4.5.0",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
-    "pagefind": "^0.10.6",
+    "pagefind": "^1.4.0",
     "parse-domain": "^5.0.0",
     "sentiment": "^5.0.2",
     "sqlite3": "^5.1.6",
